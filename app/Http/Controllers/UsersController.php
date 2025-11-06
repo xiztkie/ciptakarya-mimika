@@ -19,7 +19,7 @@ class UsersController extends Controller
                     ->orWhere('email', 'like', '%' . $search . '%');
             });
         }
-        $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        $users = $query->orderBy('created_at', 'desc')->paginate(5);
         $data = [
             'title' => 'User Data',
             'active' => 'settings-users',

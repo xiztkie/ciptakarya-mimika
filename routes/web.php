@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MasterdataController;
 use App\Http\Controllers\SyncController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 
 
@@ -22,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
         /* SYNC DATA */
         Route::get('/sync-data', [SyncController::class, 'index'])->name('sync-data');
         Route::post('/sync-data/penyedia', [SyncController::class, 'syncpenyedia'])->name('syncpenyedia');
+        Route::post('/sync-data/lokasi-penyedia', [SyncController::class, 'synclokasipenyedia'])->name('synclokasipenyedia');
         Route::post('/sync-data/paket-tender', [SyncController::class, 'synctender'])->name('synctender');
         Route::post('/sync-data/paket-nontender', [SyncController::class, 'syncnontender'])->name('syncnontender');
         Route::post('/sync-data/kontrak-tender', [SyncController::class, 'synckontraktender'])->name('synckontraktender');
@@ -33,6 +35,25 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/users/edit/{id}', [UsersController::class, 'edituser'])->name('edituser');
         Route::post('/users/delete/{id}', [UsersController::class, 'deleteuser'])->name('deleteuser');
         Route::post('/users/changepass/{id}', [UsersController::class, 'changepass'])->name('changepass');
+
+        /* MASTER DATA */
+        Route::get('/masterdata/datapaket', [MasterdataController::class, 'datapaket'])->name('datapaket');
+        Route::post('/masterdata/datapaket/edit/{id}', [MasterdataController::class, 'editpaket'])->name('editpaket');
+
+        /* BIDANG */
+        Route::get('/masterdata/bidang', [MasterdataController::class, 'bidang'])->name('bidang');
+        Route::post('/masterdata/bidang/add', [MasterdataController::class, 'addbidang'])->name('addbidang');
+        Route::post('/masterdata/bidang/edit/{id}', [MasterdataController::class, 'editbidang'])->name('editbidang');
+        Route::post('/masterdata/bidang/delete/{id}', [MasterdataController::class, 'deletebidang'])->name('deletebidang');
+
+        /* PENYEDIA */
+        Route::get('/masterdata/penyedia', [MasterdataController::class, 'datapenyedia'])->name('datapenyedia');
+        Route::post('/masterdata/penyedia/edit/{id}', [MasterdataController::class, 'editpenyedia'])->name('editpenyedia');
+        Route::post('/masterdata/penyedia/sync', [SyncController::class, 'syncdatapenyedia'])->name('syncdatapenyedia');
+        Route::post('/masterdata/penyedia/sync/sikap', [SyncController::class, 'syncdatapenyediasikap'])->name('syncdatapenyediasikap');
+        Route::post('/sync-data/penyedia-sikap', [SyncController::class, 'syncpenyediasikap'])->name('syncpenyediasikap');
+
+
     });
     Route::middleware(['role:User'])->group(function () {});
 });

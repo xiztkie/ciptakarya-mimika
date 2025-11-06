@@ -46,6 +46,9 @@ return [
         'isb_spse_nontender_spmk' => env('ISB_SPSE_NONTENDER_SPMK'),
         'isb_spse_tender_kontrak' => env('ISB_SPSE_TENDER_KONTRAK'),
         'isb_spse_nontender_kontrak' => env('ISB_SPSE_NONTENDER_KONTRAK'),
+        'isb_spse_tender_selesai' => env('ISB_SPSE_TENDER_SELESAI'),
+        'isb_spse_nontender_selesai' => env('ISB_SPSE_NONTENDER_SELESAI'),
+        'isb_sikap_penyedia' => env('ISB_SIKAP_PENYEDIA'),
     ],
 
 ];
