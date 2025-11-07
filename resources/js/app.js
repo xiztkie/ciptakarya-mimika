@@ -15,3 +15,6 @@ AOS.init({
     offset: 120,
     easing: 'ease-in-out',
 });
+
+import ApexCharts from 'apexcharts';
+window.ApexCharts = ApexCharts;

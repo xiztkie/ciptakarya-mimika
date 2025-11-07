@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BidangModel;
+use App\Models\DokumentasiModel;
 use App\Models\KontrakModel;
 use App\Models\PaketModel;
 use App\Models\PenyediaModel;
@@ -123,6 +124,86 @@ class MasterdataController extends Controller
         }
 
         return redirect()->back()->with('success', 'Data paket berhasil diupdate.');
+    }
+
+    public function detailpaket($id)
+    {
+        $ids = decrypt($id);
+        $paket = PaketModel::select(
+            'paket.*',
+            'kontrak.no_kontrak',
+            'kontrak.tgl_kontrak',
+            'kontrak.nilai_kontrak',
+            'kontrak.nilai_penawaran',
+            'penyedia.nama_penyedia',
+            'kontrak.npwp_penyedia',
+            'kontrak.wakil_sah_penyedia',
+            'kontrak.waktu_pelaksanaan',
+            'penyedia.kd_penyedia',
+            'penyedia.oap'
+        )
+            ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
+            ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
+            ->where('paket.id', $ids)
+            ->first();
+        $dokumentasi = DokumentasiModel::where('paket_id', $ids)->get();
+
+        $data = [
+            'title' => 'Detail Paket',
+            'paket' => $paket,
+            'dokumentasi' => $dokumentasi,
+        ];
+
+        return view('admin.detailpaket', $data);
+    }
+
+    public function updatemaps(Request $request, $id)
+    {
+        try {
+            $ids = decrypt($id);
+            $request->validate([
+                'longitude' => 'required',
+                'latitude' => 'required',
+            ]);
+
+            $paket = PaketModel::findOrFail($ids);
+            $paket->longitude = $request->input('longitude');
+            $paket->latitude = $request->input('latitude');
+            $paket->save();
+
+            return redirect()->back()->with('toast_success', 'Peta lokasi berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors([
+                'error' => 'Terjadi kesalahan saat memperbarui peta lokasi: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+    public function editpaketdetail($id, Request $request)
+    {
+        try {
+            $ids = decrypt($id);
+            $request->validate([
+                'kategori' => 'nullable|string',
+                'jenis' => 'nullable|string',
+                'umur' => 'nullable|string',
+                'keterangan' => 'nullable|string',
+            ]);
+
+            $paket = PaketModel::findOrFail($ids);
+            $paket->update([
+                'kategori' => $request->input('kategori'),
+                'jenis' => $request->input('jenis'),
+                'umur' => $request->input('umur'),
+                'keterangan' => $request->input('keterangan'),
+            ]);
+
+            return redirect()->back()->with('success', 'Detail paket berhasil diupdate.');
+        } catch (\Exception $e) {
+            return back()->withInput()->withErrors([
+                'error' => 'Terjadi kesalahan saat mengupdate detail paket: ' . $e->getMessage()
+            ]);
+        }
     }
 
     /* BIDANG */

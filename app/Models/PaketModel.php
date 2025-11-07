@@ -30,5 +30,8 @@ class PaketModel extends Model
         'umur',
         'detail_lokasi',
         'bidang',
+        'longitude',
+        'latitude',
+        'keterangan',
     ];
 }

@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DokumentasiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MasterdataController;
 use App\Http\Controllers\SyncController;
 use App\Http\Controllers\UsersController;
+use App\Models\DokumentasiModel;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -39,6 +42,11 @@ Route::middleware(['auth'])->group(function () {
         /* MASTER DATA */
         Route::get('/masterdata/datapaket', [MasterdataController::class, 'datapaket'])->name('datapaket');
         Route::post('/masterdata/datapaket/edit/{id}', [MasterdataController::class, 'editpaket'])->name('editpaket');
+        Route::get('/masterdata/datapaket/detail/{id}', [MasterdataController::class, 'detailpaket'])->name('detailpaket');
+        Route::post('/masterdata/datapaket/updatemaps/{id}', [MasterdataController::class, 'updatemaps'])->name('updatemaps');
+        Route::post('/masterdata/datapaket/dokumentasi/add/{id}', [DokumentasiController::class, 'adddokumentasi'])->name('adddokumentasi');
+        Route::post('/masterdata/datapaket/dokumentasi/delete/{id}', [DokumentasiController::class, 'deletedokumentasi'])->name('deletedokumentasi');
+        Route::post('/masterdata/datapaket/detailedit/{id}', [MasterdataController::class, 'editpaketdetail'])->name('editpaketdetail');
 
         /* BIDANG */
         Route::get('/masterdata/bidang', [MasterdataController::class, 'bidang'])->name('bidang');
@@ -53,7 +61,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/masterdata/penyedia/sync/sikap', [SyncController::class, 'syncdatapenyediasikap'])->name('syncdatapenyediasikap');
         Route::post('/sync-data/penyedia-sikap', [SyncController::class, 'syncpenyediasikap'])->name('syncpenyediasikap');
 
-
+        /* LAPORAN */
+        Route::get('/laporan/laporanpaket', [LaporanController::class, 'laporanpaket'])->name('laporanpaket');
+        Route::get('laporan/export/laporanpaketpdf', [LaporanController::class, 'exportpdflaporanpaket'])->name('exportpdflaporanpaket');
+        Route::get('laporan/export/laporanpaketexcel', [LaporanController::class, 'exportexcelaporanpaket'])->name('exportexcelaporanpaket');
+        Route::get('/laporan/laporanperpenyedia', [LaporanController::class, 'laporanperpenyedia'])->name('laporanperpenyedia');
+        Route::get('laporan/export/laporanperpenyediapdf', [LaporanController::class, 'exportpdflaporanperpenyedia'])->name('exportpdflaporanperpenyedia');
+        Route::get('laporan/export/laporanperpenyediaexcel', [LaporanController::class, 'exportexcelaporanperpenyedia'])->name('exportexcelaporanperpenyedia');
     });
     Route::middleware(['role:User'])->group(function () {});
 });

@@ -137,6 +137,10 @@
                                 class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg">
                                 <i class="fas fa-pencil-alt text-xs"></i>
                             </button>
+                            <a href="{{ route('detailpaket', encrypt($item->id)) }}" title="Detail Paket"
+                                class="ml-2 bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105">
+                                <i class="fas fa-file-alt text-xs"></i>
+                            </a>
                         </div>
 
                         <div class="grid grid-cols-2 gap-4 text-xs">
@@ -232,7 +236,7 @@
                             <th class="px-4 py-3 text-center border-b border-gray-200">
                                 <div class="flex items-center justify-center">
                                     <i class="fas fa-tag mr-1 text-xs"></i>
-                                   TYPE
+                                    TYPE
                                 </div>
                             </th>
                             <th class="px-4 py-3 text-center border-b border-gray-200">
@@ -319,12 +323,16 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-3">
-                                    <div class="flex items-center justify-center">
+                                    <div class="flex items-center justify-center gap-2">
                                         <button data-modal-toggle="edit-modal{{ $item->id }}"
                                             data-modal-target="edit-modal{{ $item->id }}" title="Edit"
                                             class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105">
                                             <i class="fas fa-pencil-alt text-xs"></i>
                                         </button>
+                                        <a href="{{ route('detailpaket', encrypt($item->id)) }}" title="Detail Paket"
+                                            class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105">
+                                            <i class="fas fa-file-alt text-xs"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

@@ -34,6 +34,9 @@ return new class extends Migration
             $table->text('umur')->nullable();
             $table->text('detail_lokasi')->nullable();
             $table->string('bidang')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }
