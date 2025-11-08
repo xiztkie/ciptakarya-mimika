@@ -68,6 +68,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/laporan/laporanperpenyedia', [LaporanController::class, 'laporanperpenyedia'])->name('laporanperpenyedia');
         Route::get('laporan/export/laporanperpenyediapdf', [LaporanController::class, 'exportpdflaporanperpenyedia'])->name('exportpdflaporanperpenyedia');
         Route::get('laporan/export/laporanperpenyediaexcel', [LaporanController::class, 'exportexcelaporanperpenyedia'])->name('exportexcelaporanperpenyedia');
+
+        /* PETA PAKET */
+        Route::get('/masterdata/petapaket', [MasterdataController::class, 'petapaket'])->name('peta-paket');
     });
-    Route::middleware(['role:User'])->group(function () {});
+    Route::middleware(['role:User'])->group(function () {
+        
+    });
 });

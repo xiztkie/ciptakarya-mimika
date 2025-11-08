@@ -11,7 +11,19 @@
                     class="relative px-4 py-2.5 rounded-xl transition-all duration-300 text-gray-700 hover:text-gray-900 hover:bg-white/60 hover:shadow-md backdrop-blur-sm border border-transparent hover:border-yellow-200/50 group {{ request()->routeIs('dashboard') ? 'bg-yellow-200 text-yellow-800' : '' }}">
                     <div class="flex items-center">
                         <i class="fas fa-tachometer-alt w-4 h-4 mr-2 relative z-10"></i>
-                        <span class="relative z-10">Dashboards</span>
+                        <span class="relative z-10">Dashboard</span>
+                    </div>
+                    <div
+                        class="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-100/0 to-yellow-100/0 group-hover:from-yellow-100/30 group-hover:to-white/30 transition-all duration-300">
+                    </div>
+                </a>
+
+                <!-- New Peta Paket Menu -->
+                <a href="{{ route('peta-paket') }}"
+                    class="relative px-4 py-2.5 rounded-xl transition-all duration-300 text-gray-700 hover:text-gray-900 hover:bg-white/60 hover:shadow-md backdrop-blur-sm border border-transparent hover:border-yellow-200/50 group {{ request()->routeIs('peta-paket') ? 'bg-yellow-200 text-yellow-800' : '' }}">
+                    <div class="flex items-center">
+                        <i class="fas fa-map-marked-alt w-4 h-4 mr-2 relative z-10"></i>
+                        <span class="relative z-10">Peta Paket</span>
                     </div>
                     <div
                         class="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-100/0 to-yellow-100/0 group-hover:from-yellow-100/30 group-hover:to-white/30 transition-all duration-300">
@@ -21,7 +33,7 @@
                 <div class="relative group">
                     <button
                         class="relative flex items-center px-4 py-2.5 rounded-xl transition-all duration-300 text-gray-700 hover:text-gray-900 hover:bg-white/60 hover:shadow-md backdrop-blur-sm border border-transparent hover:border-yellow-200/50 focus:outline-none group">
-                        <i class="fas fa-database w-4 h-4 mr-2 relative z-10"></i>
+                        <i class="fas fa-chart-bar w-4 h-4 mr-2 relative z-10"></i>
                         <span class="relative z-10 mr-2">Laporan</span>
                         <svg class="relative z-10 w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
                             fill="currentColor" viewBox="0 0 20 20">
@@ -37,15 +49,15 @@
                         class="absolute left-0 mt-3 w-64 bg-white/95 backdrop-blur-xl border border-yellow-200/60 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transform translate-y-2 group-hover:translate-y-0 group-focus-within:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
                         <div class="py-2">
                             <a href="{{ route('laporanpaket') }}"
-                                class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('penyedia') ? 'bg-yellow-100 text-yellow-800' : '' }}">
+                                class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('laporanpaket') ? 'bg-yellow-100 text-yellow-800' : '' }}">
                                 <i
-                                    class="fas fa-building w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
+                                    class="fas fa-box w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">Laporan Paket</span>
                             </a>
                             <a href="{{ route('laporanperpenyedia') }}"
-                                class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('bidang') ? 'bg-yellow-100 text-yellow-800' : '' }}">
+                                class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('laporanperpenyedia') ? 'bg-yellow-100 text-yellow-800' : '' }}">
                                 <i
-                                    class="fas fa-layer-group w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
+                                    class="fas fa-building w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">Laporan Per Perusahaan</span>
                             </a>
                         </div>
@@ -82,7 +94,7 @@
                                 <span class="font-medium">Data Paket</span>
                             </a>
                             <a href="{{ route('datapenyedia') }}"
-                                class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('penyedia') ? 'bg-yellow-100 text-yellow-800' : '' }}">
+                                class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('datapenyedia') ? 'bg-yellow-100 text-yellow-800' : '' }}">
                                 <i
                                     class="fas fa-building w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">Data Penyedia</span>
@@ -240,41 +252,100 @@
             <span
                 class="font-semibold text-lg text-yellow-800">{{ auth()->user()->name ?? auth()->user()->username }}</span>
         </div>
+
+        <!-- Dashboard Menu -->
         <a href="{{ route('dashboard') }}"
-            class="block px-4 py-3 rounded-xl font-semibold mb-2 transition {{ request()->routeIs('dashboard') ? 'bg-yellow-200 text-yellow-800' : 'text-gray-700 hover:bg-yellow-200' }}">Dashboards</a>
+            class="flex items-center px-4 py-3 rounded-xl font-semibold mb-2 transition {{ request()->routeIs('dashboard') ? 'bg-yellow-200 text-yellow-800' : 'text-gray-700 hover:bg-yellow-200' }}">
+            <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
+            Dashboard
+        </a>
+
+        <!-- Peta Paket Menu for Mobile -->
+        <a href="{{ route('peta-paket') }}"
+            class="flex items-center px-4 py-3 rounded-xl font-semibold mb-2 transition {{ request()->routeIs('peta-paket') ? 'bg-yellow-200 text-yellow-800' : 'text-gray-700 hover:bg-yellow-200' }}">
+            <i class="fas fa-map-marked-alt w-5 h-5 mr-3"></i>
+            Peta Paket
+        </a>
+
+        <!-- Laporan Section -->
         <div class="mt-4">
-            <span class="block px-3 py-2 text-gray-400 font-semibold">Master Data</span>
+            <span class="block px-3 py-2 text-gray-400 font-semibold flex items-center">
+                <i class="fas fa-chart-bar w-4 h-4 mr-2"></i>
+                Laporan
+            </span>
+            <a href="{{ route('laporanpaket') }}"
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('laporanpaket') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-box w-4 h-4 mr-3 text-gray-500"></i>
+                Laporan Paket
+            </a>
+            <a href="{{ route('laporanperpenyedia') }}"
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('laporanperpenyedia') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-building w-4 h-4 mr-3 text-gray-500"></i>
+                Laporan Per Perusahaan
+            </a>
+        </div>
+
+        <!-- Master Data Section -->
+        <div class="mt-4">
+            <span class="block px-3 py-2 text-gray-400 font-semibold flex items-center">
+                <i class="fas fa-database w-4 h-4 mr-2"></i>
+                Master Data
+            </span>
             <a href="{{ route('bidang') }}"
-                class="block px-5 py-2 rounded-xl transition {{ request()->routeIs('paket.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">Data
-                Bidang</a>
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('bidang') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-layer-group w-4 h-4 mr-3 text-gray-500"></i>
+                Data Bidang
+            </a>
             <a href="{{ route('datapaket') }}"
-                class="block px-5 py-2 rounded-xl transition {{ request()->routeIs('paket.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">Data
-                Paket</a>
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('datapaket') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-box w-4 h-4 mr-3 text-gray-500"></i>
+                Data Paket
+            </a>
             <a href="{{ route('datapenyedia') }}"
-                class="block px-5 py-2 rounded-xl transition {{ request()->routeIs('kontrak.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">Data
-                Penyedia</a>
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('datapenyedia') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-building w-4 h-4 mr-3 text-gray-500"></i>
+                Data Penyedia
+            </a>
         </div>
+
+        <!-- Settings Section -->
         <div class="mt-4">
-            <span class="block px-3 py-2 text-gray-400 font-semibold">Settings</span>
+            <span class="block px-3 py-2 text-gray-400 font-semibold flex items-center">
+                <i class="fas fa-cog w-4 h-4 mr-2"></i>
+                Settings
+            </span>
             <a href="{{ route('sync-data') }}"
-                class="block px-5 py-2 rounded-xl transition {{ request()->routeIs('sync-data') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">Sync
-                Data</a>
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('sync-data') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-sync-alt w-4 h-4 mr-3 text-gray-500"></i>
+                Sync Data
+            </a>
             <a href="{{ route('users') }}"
-                class="block px-5 py-2 rounded-xl transition {{ request()->routeIs('users.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">Users</a>
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('users.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-users w-4 h-4 mr-3 text-gray-500"></i>
+                Users
+            </a>
             <a href=""
-                class="block px-5 py-2 rounded-xl transition {{ request()->routeIs('app.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">App
-                Settings</a>
+                class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('app.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
+                <i class="fas fa-sliders-h w-4 h-4 mr-3 text-gray-500"></i>
+                App Settings
+            </a>
         </div>
+
+        <!-- User Actions -->
         <div class="mt-8 flex flex-col gap-2">
             <a href=""
                 class="flex items-center px-4 py-2 rounded-xl transition text-gray-700 hover:bg-yellow-200 {{ request()->routeIs('profile.edit') ? 'bg-yellow-200' : '' }}">
-                <i class="fas fa-user mr-3 text-gray-500"></i>Edit profile
+                <i class="fas fa-user w-5 h-5 mr-3 text-gray-500"></i>Edit profile
             </a>
+            <button type="button" data-modal-target="ubahPasswordModal" data-modal-toggle="ubahPasswordModal"
+                class="flex items-center px-4 py-2 rounded-xl transition text-gray-700 hover:bg-yellow-200 text-left w-full">
+                <i class="fas fa-key w-5 h-5 mr-3 text-gray-500"></i>Ubah Password
+            </button>
             <form action="{{ route('logout') }}" method="post" class="w-full">
                 @csrf
                 <button type="submit"
                     class="flex items-center w-full px-4 py-2 rounded-xl hover:bg-red-200 transition text-red-600 font-semibold">
-                    <i class="fas fa-sign-out-alt mr-3"></i>Sign out
+                    <i class="fas fa-sign-out-alt w-5 h-5 mr-3"></i>Sign out
                 </button>
             </form>
         </div>
