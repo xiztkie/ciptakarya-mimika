@@ -18,17 +18,21 @@ class LaporanController extends Controller
 {
     public function laporanpaket(Request $request)
     {
+        $statusFilter = function ($q) {
+            $q->where(function ($subQ) {
+                $subQ->whereNull('paket.status_nontender')
+                    ->orWhere('paket.status_nontender', '!=', 'Gagal/Batal');
+            })->orWhere(function ($subQ) {
+                $subQ->whereNull('paket.status_tender')
+                    ->orWhere('paket.status_tender', '!=', 'Gagal/Batal');
+            });
+        };
+
         $query = PaketModel::query()
             ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
             ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
             ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
-            ->where(function ($q) {
-                $q->where(function ($subQ) {
-                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
-                })->orWhere(function ($subQ) {
-                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
-                });
-            })
+            ->where($statusFilter)
             ->select(
                 'paket.*',
                 'kontrak.no_kontrak',
@@ -96,17 +100,21 @@ class LaporanController extends Controller
 
     public function exportpdflaporanpaket(Request $request)
     {
+        $statusFilter = function ($q) {
+            $q->where(function ($subQ) {
+                $subQ->whereNull('paket.status_nontender')
+                    ->orWhere('paket.status_nontender', '!=', 'Gagal/Batal');
+            })->orWhere(function ($subQ) {
+                $subQ->whereNull('paket.status_tender')
+                    ->orWhere('paket.status_tender', '!=', 'Gagal/Batal');
+            });
+        };
+
         $query = PaketModel::query()
             ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
             ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
             ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
-            ->where(function ($q) {
-                $q->where(function ($subQ) {
-                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
-                })->orWhere(function ($subQ) {
-                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
-                });
-            })
+            ->where($statusFilter)
             ->select(
                 'paket.*',
                 'kontrak.no_kontrak',
@@ -198,17 +206,21 @@ class LaporanController extends Controller
 
     public function exportexcelaporanpaket(Request $request)
     {
+        $statusFilter = function ($q) {
+            $q->where(function ($subQ) {
+                $subQ->whereNull('paket.status_nontender')
+                    ->orWhere('paket.status_nontender', '!=', 'Gagal/Batal');
+            })->orWhere(function ($subQ) {
+                $subQ->whereNull('paket.status_tender')
+                    ->orWhere('paket.status_tender', '!=', 'Gagal/Batal');
+            });
+        };
+
         $query = PaketModel::query()
             ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
             ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
             ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
-            ->where(function ($q) {
-                $q->where(function ($subQ) {
-                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
-                })->orWhere(function ($subQ) {
-                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
-                });
-            })
+            ->where($statusFilter)
             ->select(
                 'paket.*',
                 'kontrak.no_kontrak',
@@ -268,17 +280,21 @@ class LaporanController extends Controller
 
     public function laporanperpenyedia(Request $request)
     {
+        $statusFilter = function ($q) {
+            $q->where(function ($subQ) {
+                $subQ->whereNull('paket.status_nontender')
+                    ->orWhere('paket.status_nontender', '!=', 'Gagal/Batal');
+            })->orWhere(function ($subQ) {
+                $subQ->whereNull('paket.status_tender')
+                    ->orWhere('paket.status_tender', '!=', 'Gagal/Batal');
+            });
+        };
+
         $paket = PaketModel::query()
             ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
             ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
             ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
-            ->where(function ($q) {
-                $q->where(function ($subQ) {
-                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
-                })->orWhere(function ($subQ) {
-                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
-                });
-            })
+            ->where($statusFilter)
             ->select(
                 'paket.*',
                 'kontrak.no_kontrak',
@@ -327,17 +343,21 @@ class LaporanController extends Controller
 
     public function exportpdflaporanperpenyedia(Request $request)
     {
+        $statusFilter = function ($q) {
+            $q->where(function ($subQ) {
+                $subQ->whereNull('paket.status_nontender')
+                    ->orWhere('paket.status_nontender', '!=', 'Gagal/Batal');
+            })->orWhere(function ($subQ) {
+                $subQ->whereNull('paket.status_tender')
+                    ->orWhere('paket.status_tender', '!=', 'Gagal/Batal');
+            });
+        };
+
         $paket = PaketModel::query()
             ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
             ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
             ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
-            ->where(function ($q) {
-                $q->where(function ($subQ) {
-                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
-                })->orWhere(function ($subQ) {
-                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
-                });
-            })
+            ->where($statusFilter)
             ->select(
                 'paket.*',
                 'kontrak.no_kontrak',
@@ -412,17 +432,21 @@ class LaporanController extends Controller
 
     public function exportexcelaporanperpenyedia(Request $request)
     {
+        $statusFilter = function ($q) {
+            $q->where(function ($subQ) {
+                $subQ->whereNull('paket.status_nontender')
+                    ->orWhere('paket.status_nontender', '!=', 'Gagal/Batal');
+            })->orWhere(function ($subQ) {
+                $subQ->whereNull('paket.status_tender')
+                    ->orWhere('paket.status_tender', '!=', 'Gagal/Batal');
+            });
+        };
+
         $paket = PaketModel::query()
             ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
             ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
             ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
-            ->where(function ($q) {
-                $q->where(function ($subQ) {
-                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
-                })->orWhere(function ($subQ) {
-                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
-                });
-            })
+            ->where($statusFilter)
             ->select(
                 'paket.*',
                 'kontrak.no_kontrak',

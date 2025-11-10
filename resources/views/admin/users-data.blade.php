@@ -96,7 +96,6 @@
         </div>
 
         <div class="bg-white shadow-2xl rounded-b-xl">
-            <!-- Mobile View -->
             <div class="block lg:hidden p-6 space-y-4">
                 @forelse ($users as $index => $item)
                     <div
@@ -132,7 +131,7 @@
                                     class="bg-amber-500 hover:bg-amber-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg">
                                     <i class="fas fa-key text-xs"></i>
                                 </button>
-                                @if ($item->role != 'Administrator')
+                                @if ($item->role != 'Admin')
                                     <button data-modal-toggle="delete-modal{{ $item->id }}"
                                         data-modal-target="delete-modal{{ $item->id }}"
                                         class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg">
@@ -148,11 +147,11 @@
                                     <i class="fas fa-shield-alt mr-2 text-purple-500 text-xs"></i>
                                     <span class="font-medium">Role:</span>
                                 </div>
-                                @if ($item->role == 'Administrator')
+                                @if ($item->role == 'Admin')
                                     <span
                                         class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
                                         <i class="fas fa-crown mr-1"></i>
-                                        Administrator
+                                        Admin
                                     </span>
                                 @else
                                     <span
@@ -195,7 +194,6 @@
                 @endforelse
             </div>
 
-            <!-- Desktop Table View -->
             <div class="hidden lg:block overflow-x-auto">
                 <table class="min-w-full bg-white">
                     <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
@@ -269,7 +267,8 @@
                                         <div class="flex-1 min-w-0">
                                             <p class="text-sm font-bold text-gray-800 truncate">{{ $item->name }}
                                             </p>
-                                            <span class="text-xs text-gray-500 truncate"><a>@</a>{{ $item->username }}</span>
+                                            <span
+                                                class="text-xs text-gray-500 truncate"><a>@</a>{{ $item->username }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -280,11 +279,11 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-xs text-center">
-                                    @if ($item->role == 'Administrator')
+                                    @if ($item->role == 'Admin')
                                         <span
                                             class="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-purple-100 text-purple-800 border border-purple-200">
                                             <i class="fas fa-crown mr-1 text-[8px]"></i>
-                                            Administrator
+                                            Admin
                                         </span>
                                     @else
                                         <span
@@ -321,7 +320,7 @@
                                             class="bg-amber-500 hover:bg-amber-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105">
                                             <i class="fas fa-key text-xs"></i>
                                         </button>
-                                        @if ($item->role != 'Administrator')
+                                        @if ($item->role != 'Admin')
                                             <button data-modal-toggle="delete-modal{{ $item->id }}"
                                                 data-modal-target="delete-modal{{ $item->id }}" title="Hapus"
                                                 class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg transition-all duration-200 hover:shadow-lg transform hover:scale-105">
@@ -463,14 +462,14 @@
                             </div>
 
                             <div class="space-y-2">
-                                <label for="kontak" class="flex items-center text-sm font-semibold text-gray-700">
+                                <label for="contact" class="flex items-center text-sm font-semibold text-gray-700">
                                     <i class="fas fa-phone text-orange-500 mr-2"></i>
                                     Kontak (No. HP)
                                 </label>
-                                <input type="text" name="kontak" id="kontak" value="{{ old('kontak') }}"
+                                <input type="text" name="contact" id="contact" value="{{ old('contact') }}"
                                     placeholder="Masukan nomor kontak..."
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 text-sm" />
-                                @error('kontak')
+                                @error('contact')
                                     <p class="text-xs text-red-500 flex items-center mt-1">
                                         <i class="fas fa-exclamation-circle mr-1"></i>
                                         {{ $message }}
@@ -513,8 +512,8 @@
                                 <select id="role" name="role"
                                     class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 text-sm">
                                     <option value="" selected disabled>Pilih Role</option>
-                                    <option value="Administrator"
-                                        {{ old('role') == 'Administrator' ? 'selected' : '' }}>Administrator</option>
+                                    <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin
+                                    </option>
                                     <option value="User" {{ old('role') == 'User' ? 'selected' : '' }}>User</option>
                                 </select>
                                 @error('role')
@@ -655,13 +654,13 @@
                                 </div>
 
                                 <div class="space-y-2">
-                                    <label for="kontak{{ $item->id }}"
+                                    <label for="contact{{ $item->id }}"
                                         class="flex items-center text-sm font-semibold text-gray-700">
                                         <i class="fas fa-phone text-orange-500 mr-2"></i>
                                         Kontak (No. HP)
                                     </label>
-                                    <input type="text" name="kontak" id="kontak{{ $item->id }}"
-                                        value="{{ old('kontak', $item->kontak) }}"
+                                    <input type="text" name="contact" id="contact{{ $item->id }}"
+                                        value="{{ old('contact', $item->contact) }}"
                                         class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50/50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 text-sm" />
                                 </div>
 
@@ -673,9 +672,9 @@
                                     </label>
                                     <select id="role{{ $item->id }}" name="role" disabled
                                         class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 text-sm cursor-not-allowed">
-                                        <option value="Administrator"
-                                            {{ old('role', $item->role) == 'Administrator' ? 'selected' : '' }}>
-                                            Administrator</option>
+                                        <option value="Admin"
+                                            {{ old('role', $item->role) == 'Admin' ? 'selected' : '' }}>
+                                            Admin</option>
                                         <option value="User"
                                             {{ old('role', $item->role) == 'User' ? 'selected' : '' }}>User</option>
                                     </select>
@@ -749,7 +748,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('changepass', ['id' => encrypt($item->id)]) }}" method="post">
+                    <form action="{{ route('updatepassword', ['id' => encrypt($item->id)]) }}" method="post">
                         @csrf
                         <div class="p-8 space-y-6">
                             <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">

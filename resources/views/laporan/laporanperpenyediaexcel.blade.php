@@ -31,6 +31,9 @@
             <th colspan="4"
                 style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold;">Jenis
                 Pengadaan</th>
+            <th rowspan="2"
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold;">Total
+                Paket</th>
         </tr>
         <tr>
             <th style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
@@ -45,14 +48,11 @@
     </thead>
     <tbody>
         @foreach ($vendor as $item)
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">{{ $loop->iteration }}</td>
-                <td style="border: 1px solid black; text-align: left;">{{ $item->nama_penyedia }}</td>
-                <td style="border: 1px solid black; text-align: center;">
-                    {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count() }}
-                </td>
-                <td style="border: 1px solid black; text-align: center;">
-                    {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count() }}
+            @php
+                $pengadaanBarang = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count();
+                $pekerjaanKonstruksi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count();
+                $jasaKonsultansi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count();
+                $jasaLainnya = $paket->where('npwp_penyedia', $item
                 </td>
                 <td style="border: 1px solid black; text-align: center;">
                     {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count() }}

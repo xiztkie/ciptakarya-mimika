@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/update', [UsersController::class, 'updateprofile'])->name('updateprofile');
     Route::post('/profile/changepassword', [UsersController::class, 'changepassword'])->name('changepassword');
     Route::post('/profile/updateavatar', [UsersController::class, 'updateavatar'])->name('updateavatar');
+
     Route::middleware(['role:Admin'])->group(function () {
         /* SYNC DATA */
         Route::get('/sync-data', [SyncController::class, 'index'])->name('sync-data');
@@ -37,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/users/add', [UsersController::class, 'adduser'])->name('adduser');
         Route::post('/users/edit/{id}', [UsersController::class, 'edituser'])->name('edituser');
         Route::post('/users/delete/{id}', [UsersController::class, 'deleteuser'])->name('deleteuser');
-        Route::post('/users/changepass/{id}', [UsersController::class, 'changepass'])->name('changepass');
+        Route::post('/users/updatepassword/{id}', [UsersController::class, 'updatepassword'])->name('updatepassword');
 
         /* MASTER DATA */
         Route::get('/masterdata/datapaket', [MasterdataController::class, 'datapaket'])->name('datapaket');
@@ -63,16 +64,14 @@ Route::middleware(['auth'])->group(function () {
 
         /* LAPORAN */
         Route::get('/laporan/laporanpaket', [LaporanController::class, 'laporanpaket'])->name('laporanpaket');
-        Route::get('laporan/export/laporanpaketpdf', [LaporanController::class, 'exportpdflaporanpaket'])->name('exportpdflaporanpaket');
-        Route::get('laporan/export/laporanpaketexcel', [LaporanController::class, 'exportexcelaporanpaket'])->name('exportexcelaporanpaket');
+        Route::get('/laporan/export/laporanpaketpdf', [LaporanController::class, 'exportpdflaporanpaket'])->name('exportpdflaporanpaket');
+        Route::get('/laporan/export/laporanpaketexcel', [LaporanController::class, 'exportexcelaporanpaket'])->name('exportexcelaporanpaket');
         Route::get('/laporan/laporanperpenyedia', [LaporanController::class, 'laporanperpenyedia'])->name('laporanperpenyedia');
-        Route::get('laporan/export/laporanperpenyediapdf', [LaporanController::class, 'exportpdflaporanperpenyedia'])->name('exportpdflaporanperpenyedia');
-        Route::get('laporan/export/laporanperpenyediaexcel', [LaporanController::class, 'exportexcelaporanperpenyedia'])->name('exportexcelaporanperpenyedia');
+        Route::get('/laporan/export/laporanperpenyediapdf', [LaporanController::class, 'exportpdflaporanperpenyedia'])->name('exportpdflaporanperpenyedia');
+        Route::get('/laporan/export/laporanperpenyediaexcel', [LaporanController::class, 'exportexcelaporanperpenyedia'])->name('exportexcelaporanperpenyedia');
 
         /* PETA PAKET */
         Route::get('/masterdata/petapaket', [MasterdataController::class, 'petapaket'])->name('peta-paket');
     });
-    Route::middleware(['role:User'])->group(function () {
-        
-    });
+    Route::middleware(['role:User'])->group(function () {});
 });

@@ -50,8 +50,7 @@
                         <div class="py-2">
                             <a href="{{ route('laporanpaket') }}"
                                 class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('laporanpaket') ? 'bg-yellow-100 text-yellow-800' : '' }}">
-                                <i
-                                    class="fas fa-box w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
+                                <i class="fas fa-box w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">Laporan Paket</span>
                             </a>
                             <a href="{{ route('laporanperpenyedia') }}"
@@ -132,12 +131,12 @@
                                 <i class="fas fa-users w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">Users</span>
                             </a>
-                            <a href="#"
+                           {{--  <a href="#"
                                 class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item">
                                 <i
                                     class="fas fa-sliders-h w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">App Settings</span>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
@@ -177,7 +176,8 @@
                 <div class="px-5 py-4 flex items-center gap-3 bg-linear-to-r from-yellow-100/80 to-yellow-50/80">
                     <div class="shrink-0">
                         @if ($avatar)
-                            <img src="{{ $avatar }}" class="w-12 h-12 rounded-full object-cover" alt="Avatar">
+                            <img src="{{ $avatar }}" class="w-12 h-12 rounded-full object-cover"
+                                alt="Avatar">
                         @else
                             <div
                                 class="w-12 h-12 rounded-full bg-linear-to-br from-yellow-300 to-yellow-500 flex items-center justify-center">
@@ -199,7 +199,7 @@
                 </div>
                 <ul class="py-2 text-sm text-gray-700">
                     <li>
-                        <a href="" class="flex items-center px-5 py-2.5 hover:bg-yellow-100/70 transition">
+                        <a href="{{ route('profile') }}" class="flex items-center px-5 py-2.5 hover:bg-yellow-100/70 transition">
                             <i class="fas fa-user w-5 mr-3 text-gray-500"></i>
                             Edit profile
                         </a>
@@ -253,21 +253,18 @@
                 class="font-semibold text-lg text-yellow-800">{{ auth()->user()->name ?? auth()->user()->username }}</span>
         </div>
 
-        <!-- Dashboard Menu -->
         <a href="{{ route('dashboard') }}"
             class="flex items-center px-4 py-3 rounded-xl font-semibold mb-2 transition {{ request()->routeIs('dashboard') ? 'bg-yellow-200 text-yellow-800' : 'text-gray-700 hover:bg-yellow-200' }}">
             <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
             Dashboard
         </a>
 
-        <!-- Peta Paket Menu for Mobile -->
         <a href="{{ route('peta-paket') }}"
             class="flex items-center px-4 py-3 rounded-xl font-semibold mb-2 transition {{ request()->routeIs('peta-paket') ? 'bg-yellow-200 text-yellow-800' : 'text-gray-700 hover:bg-yellow-200' }}">
             <i class="fas fa-map-marked-alt w-5 h-5 mr-3"></i>
             Peta Paket
         </a>
 
-        <!-- Laporan Section -->
         <div class="mt-4">
             <span class="block px-3 py-2 text-gray-400 font-semibold flex items-center">
                 <i class="fas fa-chart-bar w-4 h-4 mr-2"></i>
@@ -285,7 +282,6 @@
             </a>
         </div>
 
-        <!-- Master Data Section -->
         <div class="mt-4">
             <span class="block px-3 py-2 text-gray-400 font-semibold flex items-center">
                 <i class="fas fa-database w-4 h-4 mr-2"></i>
@@ -308,7 +304,6 @@
             </a>
         </div>
 
-        <!-- Settings Section -->
         <div class="mt-4">
             <span class="block px-3 py-2 text-gray-400 font-semibold flex items-center">
                 <i class="fas fa-cog w-4 h-4 mr-2"></i>
@@ -324,14 +319,13 @@
                 <i class="fas fa-users w-4 h-4 mr-3 text-gray-500"></i>
                 Users
             </a>
-            <a href=""
+           {{--  <a href=""
                 class="flex items-center px-5 py-2 rounded-xl transition {{ request()->routeIs('app.*') ? 'bg-yellow-100 text-yellow-800 font-semibold' : 'text-gray-700 hover:text-yellow-700 hover:bg-yellow-100' }}">
                 <i class="fas fa-sliders-h w-4 h-4 mr-3 text-gray-500"></i>
                 App Settings
-            </a>
+            </a> --}}
         </div>
 
-        <!-- User Actions -->
         <div class="mt-8 flex flex-col gap-2">
             <a href=""
                 class="flex items-center px-4 py-2 rounded-xl transition text-gray-700 hover:bg-yellow-200 {{ request()->routeIs('profile.edit') ? 'bg-yellow-200' : '' }}">
@@ -373,7 +367,7 @@
         </script>
     </div>
     <div id="ubahPasswordModal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full bg-gray-900/80">
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:min-h-screen bg-gray-900/80">
         <div class="relative w-full max-w-md h-full md:h-auto mx-auto mt-10 md:mt-24">
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <div class="flex justify-between items-center p-5 rounded-t dark:border-gray-600">

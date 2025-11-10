@@ -166,6 +166,8 @@
                             <th colspan="4" class="px-2 py-2 text-center align-middle border border-gray-200">Jenis
                                 Pengadaan
                             </th>
+                            <th rowspan="2" class="px-2 py-2 text-center align-middle border border-gray-200">Total
+                                Paket</th>
                         </tr>
                         <tr>
                             <th class="px-2 py-2 text-center align-middle border border-gray-200">Pengadaan Barang</th>
@@ -177,13 +179,21 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-xs">
                        @foreach ($vendor as $item)
+                           @php
+                               $pengadaanBarang = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count();
+                               $pekerjaanKonstruksi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count();
+                               $jasaKonsultansi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count();
+                               $jasaLainnya = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count();
+                               $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
+                           @endphp
                            <tr>
                                <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $loop->iteration }}</td>
                                <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $item->nama_penyedia }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{  $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count() }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{  $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count() }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{  $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count() }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{  $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count() }}</td>
+                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $pengadaanBarang }}</td>
+                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $pekerjaanKonstruksi }}</td>
+                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $jasaKonsultansi }}</td>
+                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $jasaLainnya }}</td>
+                               <td class="px-2 py-2 text-center align-middle border border-gray-200 font-semibold">{{ $totalPaket }}</td>
                            </tr>
                        @endforeach
                     </tbody>

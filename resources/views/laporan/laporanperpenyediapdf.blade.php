@@ -145,6 +145,7 @@
                 <th rowspan="2">No</th>
                 <th rowspan="2">Nama Perusahaan</th>
                 <th colspan="4">Jenis Pengadaan</th>
+                <th rowspan="2">Total Paket</th>
             </tr>
             <tr>
                 <th>Pengadaan Barang</th>
@@ -155,21 +156,21 @@
         </thead>
         <tbody>
             @foreach ($vendor as $item)
+                @php
+                    $pengadaanBarang = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count();
+                    $pekerjaanKonstruksi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count();
+                    $jasaKonsultansi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count();
+                    $jasaLainnya = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count();
+                    $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
+                @endphp
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td class="text-center">{{ $item->nama_penyedia }}</td>
-                    <td class="text-center">
-                        {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count() }}
-                    </td>
-                    <td class="text-center">
-                        {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count() }}
-                    </td>
-                    <td class="text-center">
-                        {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count() }}
-                    </td>
-                    <td class="text-center">
-                        {{ $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count() }}
-                    </td>
+                    <td class="text-center">{{ $pengadaanBarang }}</td>
+                    <td class="text-center">{{ $pekerjaanKonstruksi }}</td>
+                    <td class="text-center">{{ $jasaKonsultansi }}</td>
+                    <td class="text-center">{{ $jasaLainnya }}</td>
+                    <td class="text-center font-bold">{{ $totalPaket }}</td>
                 </tr>
             @endforeach
         </tbody>

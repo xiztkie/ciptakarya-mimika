@@ -6,37 +6,39 @@
                     <h2 class="text-base font-semibold text-gray-800">Dashboard Overview</h2>
                     <p class="text-xs text-gray-600 mt-1">Monitor statistik dan aktivitas sistem</p>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <div class="relative">
-                        <select
-                            class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm text-sm">
-                            <option value="">Pilih Tahun Anggaran</option>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                        </select>
+                <form action="{{ route('dashboard') }}" method="get">
+                    @csrf
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <div class="relative">
+                            <select name="bidang" id="bidang"
+                                class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm text-sm">
+                                <option value="">Pilih Bidang</option>
+                                @foreach ($bidanglist as $bidang)
+                                    <option value="{{ $bidang->nama_bidang }}" {{ request('bidang') == $bidang->nama_bidang ? 'selected' : '' }}>{{ $bidang->nama_bidang }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="relative">
+                            <select name="tahun_anggaran" id="tahun_anggaran"
+                                class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm text-sm">
+                                <option value="">Pilih Tahun Anggaran</option>
+                                @foreach ($tahunanggaran as $tahun)
+                                    <option value="{{ $tahun }}" {{ request('tahun_anggaran') == $tahun ? 'selected' : '' }}>{{ $tahun }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <button id="filterButton" type="submit"
+                            class="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md text-sm font-medium">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            </svg>
+                            Filter
+                        </button>
                     </div>
-                    <button
-                        class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-3 py-2 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
-                        Filter
-                    </button>
-                </div>
+                </form>
             </div>
-
-            <!-- Background Icon -->
             <div class="absolute -bottom-2 -right-2 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-600" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor">
@@ -46,9 +48,7 @@
             </div>
         </div>
 
-        <!-- Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-            <!-- Total Paket Card -->
             <div
                 class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500 group relative overflow-hidden">
                 <div class="flex items-center relative z-10">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="ml-3 flex-1">
                         <p class="text-xs font-medium text-gray-500 mb-1">Total Paket</p>
-                        <p class="text-xl font-bold text-gray-900 mb-1">1,234</p>
+                        <p class="text-xl font-bold text-gray-900 mb-1">{{ $totalpaket }}</p>
                     </div>
                 </div>
                 <div class="absolute -bottom-2 -right-2 opacity-10">
@@ -74,7 +74,6 @@
                 </div>
             </div>
 
-            <!-- Pengadaan Barang Card -->
             <div
                 class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-green-500 group relative overflow-hidden">
                 <div class="flex items-center relative z-10">
@@ -88,7 +87,7 @@
                     </div>
                     <div class="ml-3 flex-1">
                         <p class="text-xs font-medium text-gray-500 mb-1">Pengadaan Barang</p>
-                        <p class="text-xl font-bold text-gray-900 mb-1">567</p>
+                        <p class="text-xl font-bold text-gray-900 mb-1">{{ $totalpengadaan }}</p>
                     </div>
                 </div>
                 <div class="absolute -bottom-2 -right-2 opacity-10">
@@ -100,7 +99,6 @@
                 </div>
             </div>
 
-            <!-- Pekerjaan Konstruksi Card -->
             <div
                 class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-orange-500 group relative overflow-hidden">
                 <div class="flex items-center relative z-10">
@@ -114,7 +112,7 @@
                     </div>
                     <div class="ml-3 flex-1">
                         <p class="text-xs font-medium text-gray-500 mb-1">Pekerjaan Konstruksi</p>
-                        <p class="text-xl font-bold text-gray-900 mb-1">289</p>
+                        <p class="text-xl font-bold text-gray-900 mb-1">{{ $totalkonstruksi }}</p>
                     </div>
                 </div>
                 <div class="absolute -bottom-2 -right-2 opacity-10">
@@ -126,7 +124,6 @@
                 </div>
             </div>
 
-            <!-- Jasa Konsultansi Card -->
             <div
                 class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-yellow-500 group relative overflow-hidden">
                 <div class="flex items-center relative z-10">
@@ -140,7 +137,7 @@
                     </div>
                     <div class="ml-3 flex-1">
                         <p class="text-xs font-medium text-gray-500 mb-1">Jasa Konsultansi</p>
-                        <p class="text-xl font-bold text-gray-900 mb-1">342</p>
+                        <p class="text-xl font-bold text-gray-900 mb-1">{{ $totalkonsultansi }}</p>
                     </div>
                 </div>
                 <div class="absolute -bottom-2 -right-2 opacity-10">
@@ -152,7 +149,6 @@
                 </div>
             </div>
 
-            <!-- Jasa Lainnya Card -->
             <div
                 class="bg-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-purple-500 group relative overflow-hidden">
                 <div class="flex items-center relative z-10">
@@ -166,7 +162,7 @@
                     </div>
                     <div class="ml-3 flex-1">
                         <p class="text-xs font-medium text-gray-500 mb-1">Jasa Lainnya</p>
-                        <p class="text-xl font-bold text-gray-900 mb-1">325</p>
+                        <p class="text-xl font-bold text-gray-900 mb-1">{{ $totallainnya }}</p>
                     </div>
                 </div>
                 <div class="absolute -bottom-2 -right-2 opacity-10">
@@ -179,7 +175,6 @@
             </div>
         </div>
 
-        <!-- Chart -->
         <div
             class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200">
             <div class="flex items-center justify-between mb-6">
@@ -199,7 +194,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <!-- Statistics Section -->
                 <div class="space-y-4">
                     <div
                         class="bg-gradient-to-r from-slate-50 to-slate-100 p-4 rounded-2xl border-2 border-slate-200 shadow-sm">
@@ -210,7 +204,7 @@
                                 </div>
                                 <span class="text-sm font-semibold text-slate-700">Total Penyedia</span>
                             </div>
-                            <span class="text-2xl font-bold text-slate-800">1,000</span>
+                            <span class="text-2xl font-bold text-slate-800">{{ $totalpenyedia }}</span>
                         </div>
                     </div>
 
@@ -222,8 +216,14 @@
                                 <span class="text-sm font-semibold text-slate-700">Orang Asli Papua</span>
                             </div>
                             <div class="text-right">
-                                <span class="text-xl font-bold text-emerald-700">300</span>
-                                <span class="block text-xs text-emerald-600 font-medium">30%</span>
+                                <span class="text-xl font-bold text-emerald-700">{{ $totalpenyediaoap }}</span>
+                                <span class="block text-xs text-emerald-600 font-medium">
+                                    @php
+                                        $percentageOAP =
+                                            $totalpenyedia > 0 ? ($totalpenyediaoap / $totalpenyedia) * 100 : 0;
+                                        echo number_format($percentageOAP, 2) . '%';
+                                    @endphp
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -236,20 +236,25 @@
                                 <span class="text-sm font-semibold text-slate-700">Bukan Orang Asli Papua</span>
                             </div>
                             <div class="text-right">
-                                <span class="text-xl font-bold text-amber-700">700</span>
-                                <span class="block text-xs text-amber-600 font-medium">70%</span>
+                                <span class="text-xl font-bold text-amber-700">{{ $totalpenyedianonoap }}</span>
+                                <span class="block text-xs text-amber-600 font-medium">
+                                    @php
+                                        $percentageNonOAP =
+                                            $totalpenyedia > 0 ? ($totalpenyedianonoap / $totalpenyedia) * 100 : 0;
+                                        echo number_format($percentageNonOAP, 2) . '%';
+                                    @endphp
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Chart Section -->
                 <div class="flex justify-center">
                     <div class="relative">
                         <div id="penyedia-chart" class="drop-shadow-xl"></div>
                         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                             <div class="text-center bg-white/90 backdrop-blur-sm px-3 py-2 rounded-xl shadow-lg">
-                                <div class="text-2xl font-bold text-slate-800">1,000</div>
+                                <div class="text-2xl font-bold text-slate-800">{{ $totalpenyedia }}</div>
                                 <div class="text-xs text-slate-600 font-medium">Total Penyedia</div>
                             </div>
                         </div>
@@ -258,7 +263,6 @@
             </div>
         </div>
 
-        <!-- Top Providers Section -->
         <div
             class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200 mt-8">
             <div class="flex items-center justify-between mb-6">
@@ -283,411 +287,183 @@
                         <tr class="border-b-2 border-gray-100">
                             <th class="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Rank</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Nama Penyedia</th>
-                            <th class="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Kategori</th>
+                            <th class="text-left py-3 px-4 font-semibold text-gray-700 text-sm">Jenis Penyedia</th>
                             <th class="text-center py-3 px-4 font-semibold text-gray-700 text-sm">Jumlah Paket</th>
+                            <th class="text-center py-3 px-4 font-semibold text-gray-700 text-sm">Tender</th>
+                            <th class="text-center py-3 px-4 font-semibold text-gray-700 text-sm">Non Tender</th>
+
                             <th class="text-center py-3 px-4 font-semibold text-gray-700 text-sm">Total Nilai</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-6 h-6 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                        1</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">PT. Karya Mandiri Papua</div>
-                                <div class="text-xs text-gray-500">Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">Konstruksi</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">45</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 15.2M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-6 h-6 bg-gradient-to-r from-gray-300 to-gray-400 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                        2</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">CV. Timika Jaya Konstruksi</div>
-                                <div class="text-xs text-gray-500">Bukan Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Barang</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">42</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 13.8M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div
-                                        class="w-6 h-6 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                        3</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">PT. Papua Prima Konsultan</div>
-                                <div class="text-xs text-gray-500">Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">Konsultansi</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">38</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 12.1M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    4</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">CV. Mimika Teknik</div>
-                                <div class="text-xs text-gray-500">Bukan Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-full">Konstruksi</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">35</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 11.3M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    5</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">PT. Amungme Development</div>
-                                <div class="text-xs text-gray-500">Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full">Jasa
-                                    Lainnya</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">32</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 9.8M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    6</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">CV. Highlands Engineering</div>
-                                <div class="text-xs text-gray-500">Bukan Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">Konstruksi</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">29</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 8.9M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    7</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">PT. Kamoro Utama</div>
-                                <div class="text-xs text-gray-500">Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded-full">Barang</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">27</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 8.2M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    8</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">CV. Multi Sarana Papua</div>
-                                <div class="text-xs text-gray-500">Bukan Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">Konsultansi</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">25</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 7.5M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    9</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">PT. Freeport Indonesia Services</div>
-                                <div class="text-xs text-gray-500">Bukan Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded-full">Jasa
-                                    Lainnya</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">23</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 6.8M</span>
-                            </td>
-                        </tr>
-                        <tr
-                            class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4">
-                                <div
-                                    class="w-6 h-6 bg-gradient-to-r from-slate-400 to-slate-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                                    10</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <div class="font-semibold text-gray-900 text-sm">CV. Nduga Pratama</div>
-                                <div class="text-xs text-gray-500">Orang Asli Papua</div>
-                            </td>
-                            <td class="py-3 px-4">
-                                <span
-                                    class="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded-full">Konstruksi</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-lg font-bold text-blue-600">21</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 6.1M</span>
-                            </td>
-                        </tr>
+                        @forelse ($toppenyedia as $index => $penyedia)
+                            <tr class="border-b border-gray-50 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
+                                <td class="py-3 px-4">
+                                    <div class="flex items-center">
+                                        <div class="w-6 h-6 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
+                                            {{ $index + 1 }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-4">
+                                    <div class="font-semibold text-gray-900 text-sm">{{ $penyedia->nama_penyedia }}</div>
+                                    <div class="text-xs text-gray-500">{{ $penyedia->oap == 1 ? 'Orang Asli Papua' : 'Bukan Orang Asli Papua' }}</div>
+                                </td>
+                                <td class="py-3 px-4">
+                                    <span class="bg-{{ $penyedia->oap == 1 ? 'emerald' : 'amber' }}-100 text-{{ $penyedia->oap == 1 ? 'emerald' : 'amber' }}-800 text-xs font-medium px-2 py-1 rounded-full">
+                                        {{ $penyedia->oap == 1 ? 'OAP' : 'Non-OAP' }}
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-center">
+                                    <span class="text-lg font-bold text-blue-600">{{ $penyedia->jumlah_paket }}</span>
+                                </td>
+                                <td class="py-3 px-4 text-center">
+                                    <span class="text-lg font-bold text-blue-600">{{ $penyedia->tender_count}}</span>
+                                </td>
+                                <td class="py-3 px-4 text-center">
+                                    <span class="text-lg font-bold text-blue-600">{{ $penyedia->non_tender_count }}</span>
+                                </td>
+                                <td class="py-3 px-4 text-center">
+                                    <span class="text-sm font-semibold text-green-600">Rp {{ number_format($penyedia->total_nilai / 1000000, 1) }}M</span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="py-8 text-center text-gray-500">
+                                    <div class="flex flex-col items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <p class="text-sm">Tidak ada data penyedia tersedia</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Procurement by Bidang Section -->
         <div
             class="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-200 mt-8">
             <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                    <div class="bg-gradient-to-br from-indigo-500 to-blue-600 p-3 rounded-2xl text-white shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 00-2-2m0 0V5a2 2 0 012-2h12a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-gray-900">Data Bidang Pengadaan</h3>
-                        <p class="text-sm text-gray-600">Distribusi pengadaan berdasarkan bidang dan jenis</p>
-                    </div>
-                </div>
+            <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-br from-indigo-500 to-blue-600 p-3 rounded-2xl text-white shadow-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 00-2-2m0 0V5a2 2 0 012-2h12a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            </div>
+            <div>
+            <h3 class="text-lg font-bold text-gray-900">Data Bidang Pengadaan</h3>
+            <p class="text-sm text-gray-600">Distribusi pengadaan berdasarkan bidang dan jenis</p>
+            </div>
+            </div>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="w-full border border-gray-300">
-                    <thead>
-                        <tr class="border-b-2 border-gray-300 bg-gray-100">
-                            <th rowspan="2" class="text-left py-3 px-4 font-semibold text-gray-700 border-r border-gray-300 text-sm">No</th>
-                            <th rowspan="2" class="text-left py-3 px-4 font-semibold text-gray-700 border-r border-gray-300 text-sm">Bidang</th>
-                            <th colspan="4" class="text-center py-3 px-4 font-semibold text-gray-700 border-b border-gray-300 text-sm">Jenis Pengadaan</th>
-                            <th rowspan="2" class="text-center py-3 px-4 font-semibold text-gray-700 border-l border-gray-300 text-sm">Total Paket</th>
-                            <th rowspan="2" class="text-center py-3 px-4 font-semibold text-gray-700 border-l border-gray-300 text-sm">Total Nilai</th>
-                        </tr>
-                        <tr class="border-b border-gray-300 bg-gray-50">
-                            <th class="text-center py-2 px-2 font-medium text-gray-600 text-xs border-r border-gray-300">Pengadaan Barang</th>
-                            <th class="text-center py-2 px-2 font-medium text-gray-600 text-xs border-r border-gray-300">Pekerjaan Konstruksi</th>
-                            <th class="text-center py-2 px-2 font-medium text-gray-600 text-xs border-r border-gray-300">Jasa Konsultansi</th>
-                            <th class="text-center py-2 px-2 font-medium text-gray-600 text-xs">Jasa Lainnya</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
-                            </td>
-                            <td class="py-3 px-4 border-r border-gray-300">
-                                <div class="font-semibold text-gray-900 text-sm">Cipta Karya</div>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-green-600">145</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-blue-600">298</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-yellow-600">87</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-purple-600">76</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-lg font-bold text-blue-600">606</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 125.8M</span>
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
-                            </td>
-                            <td class="py-3 px-4 border-r border-gray-300">
-                                <div class="font-semibold text-gray-900 text-sm">Sumber Daya Air</div>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-green-600">89</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-blue-600">156</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-yellow-600">45</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-purple-600">32</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-lg font-bold text-blue-600">322</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 78.2M</span>
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
-                            </td>
-                            <td class="py-3 px-4 border-r border-gray-300">
-                                <div class="font-semibold text-gray-900 text-sm">Bina Marga</div>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-green-600">65</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-blue-600">134</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-yellow-600">38</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-purple-600">25</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-lg font-bold text-blue-600">262</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 45.6M</span>
-                            </td>
-                        </tr>
-                        <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">4</span>
-                            </td>
-                            <td class="py-3 px-4 border-r border-gray-300">
-                                <div class="font-semibold text-gray-900 text-sm">Administrasi Umum</div>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-green-600">28</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-blue-600">12</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-yellow-600">15</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-xs font-medium text-purple-600">189</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-lg font-bold text-blue-600">244</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-sm font-semibold text-green-600">Rp 5.8M</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr class="border-t-2 border-gray-400 bg-gray-100">
-                            <td colspan="2" class="py-3 px-4 text-right font-bold text-gray-700 border-r border-gray-300 text-sm">Total Keseluruhan:</td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-sm font-bold text-green-600">327</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-sm font-bold text-blue-600">600</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-sm font-bold text-yellow-600">185</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-sm font-bold text-purple-600">322</span>
-                            </td>
-                            <td class="py-3 px-4 text-center border-r border-gray-300">
-                                <span class="text-lg font-bold text-indigo-600">1,434</span>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="text-base font-bold text-green-600">Rp 255.4M</span>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
+            <table class="w-full border border-gray-300">
+            <thead>
+            <tr class="border-b-2 border-gray-300 bg-gray-100">
+                <th rowspan="2"
+                class="text-left py-3 px-4 font-semibold text-gray-700 border-r border-gray-300 text-sm">
+                No</th>
+                <th rowspan="2"
+                class="text-left py-3 px-4 font-semibold text-gray-700 border-r border-gray-300 text-sm">
+                Bidang</th>
+                <th colspan="4"
+                class="text-center py-3 px-4 font-semibold text-gray-700 border-b border-gray-300 text-sm">
+                Jenis Pengadaan</th>
+                <th rowspan="2"
+                class="text-center py-3 px-4 font-semibold text-gray-700 border-l border-gray-300 text-sm">
+                Total Paket</th>
+                <th rowspan="2"
+                class="text-center py-3 px-4 font-semibold text-gray-700 border-l border-gray-300 text-sm">
+                Total Pagu</th>
+            </tr>
+            <tr class="border-b border-gray-300 bg-gray-50">
+                <th
+                class="text-center py-2 px-2 font-medium text-gray-600 text-xs border-r border-gray-300">
+                Pengadaan Barang</th>
+                <th
+                class="text-center py-2 px-2 font-medium text-gray-600 text-xs border-r border-gray-300">
+                Pekerjaan Konstruksi</th>
+                <th
+                class="text-center py-2 px-2 font-medium text-gray-600 text-xs border-r border-gray-300">
+                Jasa Konsultansi</th>
+                <th class="text-center py-2 px-2 font-medium text-gray-600 text-xs">Jasa Lainnya</th>
+            </tr>
+            </thead>
+            <tbody>
+            @forelse ($bidangpaket as $index => $bidang)
+                <tr
+                class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200">
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span
+                class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">{{ $index + 1 }}</span>
+                </td>
+                <td class="py-3 px-4 border-r border-gray-300">
+                <div class="font-semibold text-gray-900 text-sm">{{ $bidang->nama_bidang }}</div>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-xs font-medium text-green-600">{{ $bidang->barang }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-xs font-medium text-blue-600">{{ $bidang->pekerjaan_konstruksi }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-xs font-medium text-yellow-600">{{ $bidang->jasa_konsultansi }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-xs font-medium text-purple-600">{{ $bidang->jasa_lainnya }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-lg font-bold text-blue-600">{{ $bidang->total_paket }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-sm font-semibold text-green-600">Rp {{ number_format($bidang->total_pagu / 1000000, 1) }}M</span>
+                </td>
+                </tr>
+            @empty
+                <tr>
+                <td colspan="8" class="py-8 text-center text-gray-500">
+                <div class="flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 9a2 2 0 00-2-2m0 0V5a2 2 0 012-2h12a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                <p class="text-sm">Tidak ada data bidang tersedia</p>
+                </div>
+                </td>
+                </tr>
+            @endforelse
+            </tbody>
+            <tfoot>
+            <tr class="border-t-2 border-gray-400 bg-gray-100">
+                <td colspan="2"
+                class="py-3 px-4 text-right font-bold text-gray-700 border-r border-gray-300 text-sm">
+                Total Keseluruhan:</td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-sm font-bold text-green-600">{{ $bidangpaket->sum('barang') }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-sm font-bold text-blue-600">{{ $bidangpaket->sum('pekerjaan_konstruksi') }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-sm font-bold text-yellow-600">{{ $bidangpaket->sum('jasa_konsultansi') }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-sm font-bold text-purple-600">{{ $bidangpaket->sum('jasa_lainnya') }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-lg font-bold text-indigo-600">{{ $bidangpaket->sum('total_paket') }}</span>
+                </td>
+                <td class="py-3 px-4 text-center border-r border-gray-300">
+                <span class="text-lg font-bold text-green-600">Rp {{ number_format($bidangpaket->sum('total_pagu') / 1000000, 1) }}M</span>
+                </td>
+            </tr>
+            </tfoot>
+            </table>
             </div>
         </div>
     </div>
@@ -695,7 +471,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var options = {
-                series: [300, 700],
+                series: [{{ $totalpenyediaoap }}, {{ $totalpenyedianonoap }}],
                 labels: ['Orang Asli Papua', 'Bukan Orang Asli Papua'],
                 chart: {
                     type: 'donut',

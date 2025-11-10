@@ -321,4 +321,57 @@ class MasterdataController extends Controller
 
         return redirect()->back()->with('success', 'Data penyedia berhasil diupdate.');
     }
+
+    /* PETA */
+    public function petapaket(Request $request)
+    {
+        $query = PaketModel::query()
+            ->leftJoin('kontrak', 'paket.kd_rup', '=', 'kontrak.kd_rup')
+            ->leftJoin('penyedia', 'kontrak.npwp_penyedia', '=', 'penyedia.npwp_penyedia')
+            ->where('paket.kd_satker_str', "1.03.0.00.0.00.01.0000")
+            ->where(function ($q) {
+                $q->where(function ($subQ) {
+                    $subQ->where('paket.status_nontender', '!=', 'Gagal/Batal');
+                })->orWhere(function ($subQ) {
+                    $subQ->where('paket.status_tender', '!=', 'Gagal/Batal');
+                });
+            })
+            ->select(
+                'paket.*',
+                'paket.id as paket_id',
+                'kontrak.no_kontrak',
+                'kontrak.tgl_kontrak',
+                'kontrak.nilai_kontrak',
+                'kontrak.nilai_penawaran',
+                'penyedia.nama_penyedia',
+                'kontrak.npwp_penyedia',
+                'kontrak.wakil_sah_penyedia',
+                'kontrak.waktu_pelaksanaan',
+                'penyedia.kd_penyedia',
+                'penyedia.oap'
+            );
+
+        if ($request->has('bidang') && $request->input('bidang') != '') {
+            $bidang = $request->input('bidang');
+            $query->where('paket.bidang', $bidang);
+        }
+
+        if ($request->has('tahun_anggaran') && $request->input('tahun_anggaran') != '') {
+            $tahun_anggaran = $request->input('tahun_anggaran');
+            $query->where('paket.tahun_anggaran', $tahun_anggaran);
+        }
+        $tahunanggaran = PaketModel::select('tahun_anggaran')
+            ->distinct()
+            ->orderBy('tahun_anggaran', 'desc')
+            ->get();
+
+        $data = [
+            'title' => 'Peta Paket',
+            'paket' => $query->get(),
+            'bidang' => BidangModel::all(),
+            'tahunanggaran' => $tahunanggaran,
+        ];
+
+        return view('admin.petapaket', $data);
+    }
 }
