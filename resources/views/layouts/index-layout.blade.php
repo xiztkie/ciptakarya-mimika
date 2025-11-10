@@ -19,15 +19,10 @@
 </head>
 
 <body class="bg-white">
-
-    @include('components.navbar')
     <main>
         {{ $slot }}
     </main>
-    @include('components.footer')
-    @include('components.backtotop')
 </body>
-<script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
 
 </html>
 @include('sweetalert::alert')

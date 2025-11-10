@@ -15,13 +15,25 @@
 </head>
 
 <body class="bg-gradient-to-br from-blue-100 via-white to-blue-200 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+    <div class="fixed inset-0 bg-cover bg-center" style="background-image: url('{{ asset('assets/images/bg.jpg') }}');"></div>
+    <div class="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8 relative z-10">
         <div class="flex flex-col items-center mb-6">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="logo"
-                class="w-20 h-auto mb-3  object-cover"
-                onerror="this.onerror=null;this.src='https://placehold.co/80x80/CCCCCC/FFFFFF?text=Logo';">
-            <h2 class="text-xl font-bold text-gray-800 mb-1">Sign In</h2>
-            <p class="text-sm text-gray-500">Welcome back! Please login to continue.</p>
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <div
+                    class="w-18 h-18  bg-white border border-gray-200 overflow-hidden flex items-center justify-center transition-transform transform hover:scale-105">
+                    <img src="{{ asset('assets/images/logo_pu.jpg') }}" alt="Logo PU" class="w-16 h-16 object-cover"
+                        onerror="this.onerror=null;this.src='https://placehold.co/80x80/CCCCCC/FFFFFF?text=Logo';">
+                </div>
+                <div
+                    class="w-20 h-20 bg-white overflow-hidden flex items-center justify-center transition-transform transform hover:scale-105">
+                    <img src="{{ asset('assets/images/logo.png') }}" alt="Logo Cipta Karya"
+                        class="w-24 h-24 object-contain"
+                        onerror="this.onerror=null;this.src='https://placehold.co/80x80/CCCCCC/FFFFFF?text=Logo';">
+                </div>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-1">Aplikasi Monitoring Paket</h2>
+            <p class="text-sm text-gray-500 text-center">Dinas Pekerjaan Umum dan Tata Ruang</p>
+            <p class="text-sm text-gray-500 text-center">Bidang Cipta Karya</p>
         </div>
 
         @if ($errors->any())
@@ -64,6 +76,9 @@
             </button>
         </form>
     </div>
+    <img src="{{ asset('assets/images/logo_mimika.png') }}" alt="Logo Mimika"
+        class="fixed top-6 left-6 w-22 h-auto z-0 pointer-events-none select-none"
+        onerror="this.onerror=null;this.src='https://placehold.co/112x112/CCCCCC/FFFFFF?text=Logo'">
     <script>
         const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', function(event) {
