@@ -29,6 +29,13 @@ return new class extends Migration
                 'updated_at' => now(),
             ],
             [
+                'nama_api' => 'Sync Lokasi Penyedia',
+                'route_sync' => 'synclokasipenyedia',
+                'last_synced_at' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'nama_api' => 'Sync Tender',
                 'route_sync' => 'synctender',
                 'last_synced_at' => null,

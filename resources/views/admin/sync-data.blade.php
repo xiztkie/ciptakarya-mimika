@@ -1,23 +1,23 @@
 <x-app-layout :title="$title" :subtitle="$subtitle ?? ''" :active="$active">
 
     <div
-        class="bg-gradient-to-br from-sky-400 to-cyan-400 text-white py-8 md:py-12 mb-8 rounded-b-2xl shadow-xl overflow-hidden relative">
-        <div class="absolute -top-12 -right-12 w-56 h-56 bg-white/20 rounded-full filter blur-xl hidden sm:block"></div>
-        <div class="absolute -bottom-16 -left-12 w-64 h-64 bg-white/20 rounded-full filter blur-xl hidden sm:block">
+        class="bg-gradient-to-br from-sky-400 to-cyan-400 text-white py-6 md:py-8 mb-6 rounded-b-2xl shadow-lg overflow-hidden relative">
+        <div class="absolute -top-8 -right-8 w-40 h-40 bg-white/20 rounded-full filter blur-lg hidden sm:block"></div>
+        <div class="absolute -bottom-12 -left-8 w-48 h-48 bg-white/20 rounded-full filter blur-lg hidden sm:block">
         </div>
 
-        <div class="absolute -bottom-4 -right-4 text-white/20 text-9xl transform rotate-12 hidden md:block">
-            <img src="{{ asset('assets/images/sync.png') }}" alt="Sync Icon" class="h-48 w-48 opacity-20">
+        <div class="absolute -bottom-2 -right-2 text-white/20 transform rotate-12 hidden md:block">
+            <img src="{{ asset('assets/images/sync.png') }}" alt="Sync Icon" class="h-32 w-32 opacity-20">
         </div>
 
         <div class="container mx-auto px-4 sm:px-6 relative">
             <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="text-center md:text-left mb-6 md:mb-0 z-10">
-                    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2"
-                        style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <div class="text-center md:text-left mb-4 md:mb-0 z-10">
+                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-1"
+                        style="text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                         Sinkronisasi Data
                     </h1>
-                    <p class="text-base sm:text-lg text-sky-100 max-w-lg">
+                    <p class="text-sm sm:text-base text-sky-100 max-w-md">
                         Jaga agar data Anda selalu terbarui dengan menyinkronkan dari sistem eksternal.
                     </p>
                 </div>
@@ -52,6 +52,8 @@
                                     $icons = [
                                         'syncpenyedia' =>
                                             '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>',
+                                        'synclokasipenyedia' =>
+                                            '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
                                         'synctender' =>
                                             '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>',
                                         'syncnontender' =>
@@ -79,7 +81,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-500">
-                                                {{ $item->last_sync ? $item->last_sync->format('d M Y, H:i') : 'Belum pernah' }}
+                                                {{ $item->last_synced_at ? \Carbon\Carbon::parse($item->last_synced_at)->format('d M Y, H:i') : 'Belum pernah' }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -115,9 +117,11 @@
                                                             </button>
                                                         </div>
                                                         <form action="{{ route($item->route_sync) }}" method="POST"
-                                                            class="p-4 text-left">
+                                                            class="p-4 text-left sync-form">
                                                             @csrf
                                                             <div class="mb-4">
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $item->id }}">
                                                                 <label for="tahun_anggaran_{{ $item->id }}"
                                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                                     Pilih Tahun Anggaran

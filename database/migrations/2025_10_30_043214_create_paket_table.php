@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('paket', function (Blueprint $table) {
             $table->id();
-            $table->string('tahun_anggaran', 4);
-            $table->string('kd_rup');
+            $table->string('kd_rup')->unique();
+            $table->unsignedSmallInteger('tahun_anggaran')->index();
             $table->string('kd_tender')->nullable();
             $table->string('kd_nontender')->nullable();
             $table->string('kd_satker_str')->nullable();
@@ -22,16 +22,21 @@ return new class extends Migration
             $table->text('nama_paket')->nullable();
             $table->decimal('pagu', 20, 2)->nullable();
             $table->decimal('hps', 20, 2)->nullable();
-            $table->string('sumber_dana')->nullable();
-            $table->string('metode_pemilihan')->nullable();
-            $table->string('jenis_pengadaan')->nullable();
-            $table->text('nip_nama_ppk')->nullable();
-            $table->string('status_tender')->nullable();
-            $table->string('status_nontender')->nullable();
-            $table->string('kategori')->nullable();
-            $table->string('jenis')->nullable();
-            $table->string('umur')->nullable();
-            $table->string('detail_lokasi')->nullable();
+            $table->text('sumber_dana')->nullable();
+            $table->text('metode_pengadaan')->nullable();
+            $table->text('jenis_pengadaan')->nullable();
+            $table->text('nama_ppk')->nullable();
+            $table->text('nip_ppk')->nullable();
+            $table->text('status_tender')->nullable();
+            $table->text('status_nontender')->nullable();
+            $table->text('kategori')->nullable();
+            $table->text('jenis')->nullable();
+            $table->text('umur')->nullable();
+            $table->text('detail_lokasi')->nullable();
+            $table->string('bidang')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

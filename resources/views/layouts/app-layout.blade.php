@@ -22,11 +22,12 @@
     <div class="flex w-full">
         @include('components.navbar', ['active' => $active])
         <div class="w-full">
-            <main class="mt-16">
+            <main class="mt-16 mb-32 md:mb-20">
                 {{ $slot }}
             </main>
         </div>
     </div>
+    @include('components.footer')
 </body>
 
 </html>

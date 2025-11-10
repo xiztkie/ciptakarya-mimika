@@ -20,7 +20,7 @@ class PaketModel extends Model
         'pagu',
         'hps',
         'sumber_dana',
-        'metode_pemilihan',
+        'metode_pengadaan',
         'jenis_pengadaan',
         'nip_nama_ppk',
         'status_tender',
@@ -29,5 +29,9 @@ class PaketModel extends Model
         'jenis',
         'umur',
         'detail_lokasi',
+        'bidang',
+        'longitude',
+        'latitude',
+        'keterangan',
     ];
 }
