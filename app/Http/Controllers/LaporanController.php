@@ -82,7 +82,7 @@ class LaporanController extends Controller
 
         $paket =  $query->paginate(30);
         $tahunanggaran = PaketModel::select('tahun_anggaran')->distinct()->orderBy('tahun_anggaran', 'desc')->get();
-        $jenispengadaan = PaketModel::select('jenis_pengadaan')->distinct()->get();
+        $jenispengadaan = PaketModel::select('jenis_pengadaan')->where('kd_satker_str', '1.03.0.00.0.00.01.0000')->distinct()->get();
         $metodepengadaan = PaketModel::select('metode_pengadaan')->distinct()->get();
 
         $data = [
