@@ -122,15 +122,15 @@
     <div class="report-header">
         <table class="header-table" style="border: none;">
             <tr>
-            <td style="width: 20%; text-align: right; border: none;">
-                <img src="{{ public_path('assets/images/logo_mimika.png') }}" class="logo" />
-            </td>
-            <td class="header-text" style="width: 60%; text-align: center; border: none;">
-                <h1>PEMERINTAH KABUPATEN MIMIKA</h1>
-                <h2>{{ strtoupper('Dinas Pekerjaan Umum dan Tata Ruang') }}</h2>
-                <p>Alamat: Jl. Cenderawasih No. 1, Timika, Papua</p>
-            </td>
-            <td style="width: 20%; border: none;"></td>
+                <td style="width: 20%; text-align: right; border: none;">
+                    <img src="{{ public_path('assets/images/logo_mimika.png') }}" class="logo" />
+                </td>
+                <td class="header-text" style="width: 60%; text-align: center; border: none;">
+                    <h1>PEMERINTAH KABUPATEN MIMIKA</h1>
+                    <h2>{{ strtoupper('Dinas Pekerjaan Umum dan Tata Ruang') }}</h2>
+                    <p>Alamat: Jl. Cenderawasih No. 1, Timika, Papua</p>
+                </td>
+                <td style="width: 20%; border: none;"></td>
             </tr>
         </table>
         <hr class="header-divider" style="width: 100%; height: 2px; margin-top: 5px;">
@@ -144,6 +144,7 @@
             <tr>
                 <th rowspan="2">No</th>
                 <th rowspan="2">Nama Perusahaan</th>
+                <th rowspan="2">Jenis Penyedia</th>
                 <th colspan="4">Jenis Pengadaan</th>
                 <th rowspan="2">Total Paket</th>
             </tr>
@@ -157,15 +158,34 @@
         <tbody>
             @foreach ($vendor as $item)
                 @php
-                    $pengadaanBarang = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count();
-                    $pekerjaanKonstruksi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count();
-                    $jasaKonsultansi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count();
-                    $jasaLainnya = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count();
+                    $pengadaanBarang = $paket
+                        ->where('npwp_penyedia', $item->npwp_penyedia)
+                        ->where('jenis_pengadaan', 'Pengadaan Barang')
+                        ->count();
+                    $pekerjaanKonstruksi = $paket
+                        ->where('npwp_penyedia', $item->npwp_penyedia)
+                        ->where('jenis_pengadaan', 'Pekerjaan Konstruksi')
+                        ->count();
+                    $jasaKonsultansi = $paket
+                        ->where('npwp_penyedia', $item->npwp_penyedia)
+                        ->where('jenis_pengadaan', 'Jasa Konsultansi')
+                        ->count();
+                    $jasaLainnya = $paket
+                        ->where('npwp_penyedia', $item->npwp_penyedia)
+                        ->where('jenis_pengadaan', 'Jasa Lainnya')
+                        ->count();
                     $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
                 @endphp
                 <tr>
                     <td class="text-center">{{ $loop->iteration }}</td>
                     <td class="text-center">{{ $item->nama_penyedia }}</td>
+                    <td class="text-center">
+                        @if ($item->oap == 1)
+                            OAP
+                        @else
+                            Non OAP
+                        @endif
+                    </td>
                     <td class="text-center">{{ $pengadaanBarang }}</td>
                     <td class="text-center">{{ $pekerjaanKonstruksi }}</td>
                     <td class="text-center">{{ $jasaKonsultansi }}</td>
