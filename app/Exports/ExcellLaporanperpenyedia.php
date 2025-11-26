@@ -25,6 +25,7 @@ class ExcellLaporanperpenyedia implements FromView, WithStyles,  WithEvents, Wit
 
     public function view(): View
     {
+
         return view('laporan.laporanperpenyediaexcel', $this->data);
     }
 
@@ -44,9 +45,8 @@ class ExcellLaporanperpenyedia implements FromView, WithStyles,  WithEvents, Wit
 
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('G:H')->getNumberFormat()->setFormatCode('#,##0.00');
         $sheet->getStyle('A')->getNumberFormat()->setFormatCode('@');
-        $sheet->getStyle('A7:F8')->getFill()
+        $sheet->getStyle('A7:G8')->getFill()
             ->setFillType(Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
 
