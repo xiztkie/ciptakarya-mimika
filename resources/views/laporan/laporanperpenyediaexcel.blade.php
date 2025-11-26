@@ -26,45 +26,74 @@
             <th rowspan="2"
                 style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold;">No</th>
             <th rowspan="2"
-                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 400px;">Nama
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 400px;">
+                Nama
                 Perusahaan</th>
+            <th rowspan="2"
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
+                Jenis Penyedia</th>
             <th colspan="4"
                 style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold;">Jenis
                 Pengadaan</th>
             <th rowspan="2"
-                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">Total
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
+                Total
                 Paket</th>
         </tr>
         <tr>
-            <th style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
+            <th
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
                 Pengadaan Barang</th>
-            <th style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
+            <th
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
                 Pekerjaan Konstruksi</th>
-            <th style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">Jasa
+            <th
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
+                Jasa
                 Konsultansi</th>
-            <th style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">Jasa
+            <th
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 150px;">
+                Jasa
                 Lainnya</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($vendor as $item)
-           @php
-                    $pengadaanBarang = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count();
-                    $pekerjaanKonstruksi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count();
-                    $jasaKonsultansi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count();
-                    $jasaLainnya = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count();
-                    $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
-                @endphp
-                <tr>
-                    <td style="border: 1px solid black; text-align: center;">{{ $loop->iteration }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item->nama_penyedia }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $pengadaanBarang }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $pekerjaanKonstruksi }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $jasaKonsultansi }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $jasaLainnya }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $totalPaket }}</td>
-                </tr>
-
+            @php
+                $pengadaanBarang = $paket
+                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                    ->where('jenis_pengadaan', 'Pengadaan Barang')
+                    ->count();
+                $pekerjaanKonstruksi = $paket
+                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                    ->where('jenis_pengadaan', 'Pekerjaan Konstruksi')
+                    ->count();
+                $jasaKonsultansi = $paket
+                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                    ->where('jenis_pengadaan', 'Jasa Konsultansi')
+                    ->count();
+                $jasaLainnya = $paket
+                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                    ->where('jenis_pengadaan', 'Jasa Lainnya')
+                    ->count();
+                $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
+            @endphp
+            <tr>
+                <td style="border: 1px solid black; text-align: center;">{{ $loop->iteration }}</td>
+                <td style="border: 1px solid black; text-align: left;">{{ $item->nama_penyedia }}</td>
+                <td style="border: 1px solid black; text-align: center;">
+                    @if ($item->oap == 1)
+                        OAP
+                    @else
+                        Non OAP
+                    @endif
+                </td>
+                <td style="border: 1px solid black; text-align: center;">{{ $pengadaanBarang }}</td>
+                <td style="border: 1px solid black; text-align: center;">{{ $pekerjaanKonstruksi }}</td>
+                <td style="border: 1px solid black; text-align: center;">{{ $jasaKonsultansi }}</td>
+                <td style="border: 1px solid black; text-align: center;">{{ $jasaLainnya }}</td>
+                <td style="border: 1px solid black; text-align: center;">{{ $totalPaket }}</td>
+            </tr>
         @endforeach
     </tbody>
 </table>

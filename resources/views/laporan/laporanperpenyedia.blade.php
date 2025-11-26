@@ -3,94 +3,103 @@
         <div
             class="relative overflow-hidden mb-8 bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl shadow-lg border border-gray-200">
             <div
-            class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-sky-200 to-cyan-300 rounded-full opacity-40 blur-3xl pointer-events-none">
+                class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-sky-200 to-cyan-300 rounded-full opacity-40 blur-3xl pointer-events-none">
             </div>
             <div
-            class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-72 h-72 bg-gradient-to-br from-violet-200 to-purple-300 rounded-full opacity-30 blur-3xl pointer-events-none">
+                class="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 w-72 h-72 bg-gradient-to-br from-violet-200 to-purple-300 rounded-full opacity-30 blur-3xl pointer-events-none">
             </div>
 
             <div class="relative z-10">
-            <div
-                class="flex flex-col sm:flex-row justify-between sm:items-center mb-5 pb-4 border-b border-gray-300/70">
-                <h3 class="text-lg font-bold text-gray-800 flex items-center mb-3 sm:mb-0">
-                <span class="flex items-center justify-center w-8 h-8 mr-3 bg-white/60 rounded-lg shadow-sm">
-                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
-                    </svg>
-                </span>
-                Filter Lanjutan
-                </h3>
-                @if (request()->hasAny(['tahun_anggaran', 'bidang', 'search']))
-                <a href="{{ route('laporanperpenyedia') }}"
-                    class="inline-flex items-center justify-center px-3 py-1.5 bg-red-100 text-red-700 text-xs font-semibold rounded-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                    Reset Filter
-                </a>
-                @endif
-            </div>
+                <div
+                    class="flex flex-col sm:flex-row justify-between sm:items-center mb-5 pb-4 border-b border-gray-300/70">
+                    <h3 class="text-lg font-bold text-gray-800 flex items-center mb-3 sm:mb-0">
+                        <span class="flex items-center justify-center w-8 h-8 mr-3 bg-white/60 rounded-lg shadow-sm">
+                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.207A1 1 0 013 6.5V4z" />
+                            </svg>
+                        </span>
+                        Filter Lanjutan
+                    </h3>
+                    @if (request()->hasAny(['tahun_anggaran', 'bidang', 'search']))
+                        <a href="{{ route('laporanperpenyedia') }}"
+                            class="inline-flex items-center justify-center px-3 py-1.5 bg-red-100 text-red-700 text-xs font-semibold rounded-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
+                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Reset Filter
+                        </a>
+                    @endif
+                </div>
 
-            <form method="GET" action="{{ route('laporanperpenyedia') }}">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
-                <div>
-                    <label for="tahun_anggaran"
-                    class="block text-xs font-semibold text-gray-600 mb-1">Tahun</label>
-                    <select name="tahun_anggaran" id="tahun_anggaran"
-                    class="w-full px-3 py-2 text-sm bg-white/80 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out backdrop-blur-sm">
-                    <option value="">Semua</option>
-                    @foreach ($tahunanggaran as $opt)
-                        <option value="{{ $opt->tahun_anggaran }}"
-                        {{ request('tahun_anggaran') == $opt->tahun_anggaran ? 'selected' : '' }}>
-                        {{ $opt->tahun_anggaran }}
-                        </option>
-                    @endforeach
-                    </select>
-                </div>
-                <div>
-                    <label for="bidang"
-                    class="block text-xs font-semibold text-gray-600 mb-1">Bidang</label>
-                    <select name="bidang" id="bidang"
-                    class="w-full px-3 py-2 text-sm bg-white/80 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out backdrop-blur-sm">
-                    <option value="">Semua</option>
-                    @foreach ($bidang as $opt)
-                        <option value="{{ $opt->nama_bidang }}"
-                        {{ request('bidang') == $opt->nama_bidang ? 'selected' : '' }}>
-                        {{ $opt->nama_bidang }}
-                        </option>
-                    @endforeach
-                    </select>
-                </div>
-                <div class="lg:col-span-1">
-                    <label for="search"
-                    class="block text-xs font-semibold text-gray-600 mb-1">Pencarian</label>
-                    <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
+                <form method="GET" action="{{ route('laporanperpenyedia') }}">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                        <div>
+                            <label for="tahun_anggaran"
+                                class="block text-xs font-semibold text-gray-700 mb-1">Tahun</label>
+                            <select name="tahun_anggaran" id="tahun_anggaran"
+                                class="w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                <option value="">Semua</option>
+                                @foreach ($tahunanggaran as $opt)
+                                    <option value="{{ $opt->tahun_anggaran }}"
+                                        {{ request('tahun_anggaran') == $opt->tahun_anggaran ? 'selected' : '' }}>
+                                        {{ $opt->tahun_anggaran }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="bidang" class="block text-xs font-semibold text-gray-700 mb-1">Bidang</label>
+                            <select name="bidang" id="bidang"
+                                class="w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                <option value="">Semua</option>
+                                @foreach ($bidang as $opt)
+                                    <option value="{{ $opt->nama_bidang }}"
+                                        {{ request('bidang') == $opt->nama_bidang ? 'selected' : '' }}>
+                                        {{ $opt->nama_bidang }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="oap" class="block text-xs font-semibold text-gray-700 mb-1">Jenis
+                                Penyedia</label>
+                            <select name="oap" id="oap"
+                                class="w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                <option value="">Semua</option>
+                                <option value="1" {{ request('oap') == '1' ? 'selected' : '' }}>OAP</option>
+                                <option value="0" {{ request('oap') == '0' ? 'selected' : '' }}>Non OAP</option>
+                            </select>
+                        </div>
+                        <div class="lg:col-span-1">
+                            <label for="search"
+                                class="block text-xs font-semibold text-gray-700 mb-1">Pencarian</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </span>
+                                <input type="text" name="search" id="search" value="{{ request('search') }}"
+                                    class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                    placeholder="Cari penyedia...">
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="w-full flex justify-center items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-lg shadow hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition transform hover:-translate-y-0.5">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                                Terapkan
+                            </button>
+                        </div>
                     </div>
-                    <input type="text" name="search" id="search" value="{{ request('search') }}"
-                        class="w-full pr-3 py-2 text-sm bg-white/80 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out backdrop-blur-sm"
-                        placeholder="Cari penyedia...">
-                    </div>
-                </div>
-                <div>
-                    <button type="submit"
-                    class="w-full inline-flex justify-center items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold rounded-md shadow-md hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 transform hover:-translate-y-0.5">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                    Terapkan
-                    </button>
-                </div>
-                </div>
-            </form>
+                </form>
             </div>
         </div>
 
@@ -163,6 +172,8 @@
                             </th>
                             <th rowspan="2" class="px-2 py-2 text-center align-middle border border-gray-200">Nama
                                 Perusahaan</th>
+                            <th rowspan="2" class="px-2 py-2 text-center align-middle border border-gray-200">Jenis
+                                Penyedia</th>
                             <th colspan="4" class="px-2 py-2 text-center align-middle border border-gray-200">Jenis
                                 Pengadaan
                             </th>
@@ -178,24 +189,54 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 text-xs">
-                       @foreach ($vendor as $item)
-                           @php
-                               $pengadaanBarang = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pengadaan Barang')->count();
-                               $pekerjaanKonstruksi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Pekerjaan Konstruksi')->count();
-                               $jasaKonsultansi = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Konsultansi')->count();
-                               $jasaLainnya = $paket->where('npwp_penyedia', $item->npwp_penyedia)->where('jenis_pengadaan', 'Jasa Lainnya')->count();
-                               $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
-                           @endphp
-                           <tr>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $loop->iteration }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $item->nama_penyedia }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $pengadaanBarang }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $pekerjaanKonstruksi }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $jasaKonsultansi }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200">{{ $jasaLainnya }}</td>
-                               <td class="px-2 py-2 text-center align-middle border border-gray-200 font-semibold">{{ $totalPaket }}</td>
-                           </tr>
-                       @endforeach
+                        @foreach ($vendor as $item)
+                            @php
+                                $pengadaanBarang = $paket
+                                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                                    ->where('jenis_pengadaan', 'Pengadaan Barang')
+                                    ->count();
+                                $pekerjaanKonstruksi = $paket
+                                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                                    ->where('jenis_pengadaan', 'Pekerjaan Konstruksi')
+                                    ->count();
+                                $jasaKonsultansi = $paket
+                                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                                    ->where('jenis_pengadaan', 'Jasa Konsultansi')
+                                    ->count();
+                                $jasaLainnya = $paket
+                                    ->where('npwp_penyedia', $item->npwp_penyedia)
+                                    ->where('jenis_pengadaan', 'Jasa Lainnya')
+                                    ->count();
+                                $totalPaket = $pengadaanBarang + $pekerjaanKonstruksi + $jasaKonsultansi + $jasaLainnya;
+                            @endphp
+                            <tr>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    {{ $loop->iteration }}</td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    {{ $item->nama_penyedia }}</td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    @if ($item->oap == 1)
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">
+                                            OAP
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800">
+                                            Non OAP
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    {{ $pengadaanBarang }}</td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    {{ $pekerjaanKonstruksi }}</td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    {{ $jasaKonsultansi }}</td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200">
+                                    {{ $jasaLainnya }}</td>
+                                <td class="px-2 py-2 text-center align-middle border border-gray-200 font-semibold">
+                                    {{ $totalPaket }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

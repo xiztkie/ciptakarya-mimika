@@ -46,7 +46,7 @@ class ExcellLaporanperpenyedia implements FromView, WithStyles,  WithEvents, Wit
     public function styles(Worksheet $sheet)
     {
         $sheet->getStyle('A')->getNumberFormat()->setFormatCode('@');
-        $sheet->getStyle('A7:G8')->getFill()
+        $sheet->getStyle('A7:H8')->getFill()
             ->setFillType(Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
 

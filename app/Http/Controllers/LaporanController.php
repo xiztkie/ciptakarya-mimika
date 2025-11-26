@@ -320,6 +320,15 @@ class LaporanController extends Controller
         $paket =  $paket->get();
 
         $vendor = PenyediaModel::query();
+
+        if ($request->has('oap') && $request->input('oap') !== '') {
+            if ($request->input('oap') == '1') {
+                $vendor->where('penyedia.oap', 1);
+            } elseif ($request->input('oap') == '0') {
+                $vendor->where('penyedia.oap', 0);
+            }
+        }
+
         if ($request->has('search')) {
             $search = $request->input('search');
             $vendor->where(function ($q) use ($search) {
