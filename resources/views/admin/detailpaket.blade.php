@@ -249,65 +249,69 @@
                                 </dd>
                             </div>
                             <div class="lg:col-span-3 border-t border-gray-200 my-2"></div>
-                            <div class="lg:col-span-3 flex justify-end mt-2 mb-2">
-                                <button type="button"
-                                    class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-xs font-semibold shadow hover:brightness-110 transition"
-                                    data-modal-target="edit-kategori-modal" data-modal-toggle="edit-kategori-modal">
-                                    <i class="fas fa-edit"></i>
-                                    Edit Kategori / Jenis / Umur
-                                </button>
-                            </div>
-                            <div
-                                class="lg:col-span-1 bg-blue-50 border border-blue-100 rounded-xl p-4 flex flex-col items-start mb-2">
-                                <dt class="font-medium text-blue-700 flex items-center gap-2">
-                                    <i class="fas fa-tags"></i>
-                                    Kategori
-                                </dt>
-                                <dd class="mt-1 text-blue-900 font-semibold">{{ $paket->kategori ?? '-' }}</dd>
-                            </div>
-                            <div
-                                class="lg:col-span-1 bg-cyan-50 border border-cyan-100 rounded-xl p-4 flex flex-col items-start mb-2">
-                                <dt class="font-medium text-cyan-700 flex items-center gap-2">
-                                    <i class="fas fa-list"></i>
-                                    Jenis
-                                </dt>
-                                <dd class="mt-1 text-cyan-900 font-semibold">{{ $paket->jenis ?? '-' }}</dd>
-                            </div>
-                            <div
-                                class="lg:col-span-1 bg-teal-50 border border-teal-100 rounded-xl p-4 flex flex-col items-start mb-2">
-                                <dt class="font-medium text-teal-700 flex items-center gap-2">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    Umur
-                                </dt>
-                                <dd class="mt-1 text-teal-900 font-semibold">
-                                    @if ($paket->umur)
-                                        @php
-                                            $umurDate = \Carbon\Carbon::parse($paket->umur);
-                                            $now = \Carbon\Carbon::now();
-                                            $diff = $umurDate->diff($now);
-                                            $years = $diff->y;
-                                            $months = $diff->m;
-                                            $days = $diff->d;
-                                        @endphp
-                                        {{ $years > 0 ? $years . ' tahun ' : '' }}{{ $months > 0 ? $months . ' bulan ' : '' }}{{ $days > 0 ? $days . ' hari' : '' }}
-                                    @else
-                                        -
-                                    @endif
-                                </dd>
-                            </div>
-                            <div class="lg:col-span-3 mb-2">
-                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-start gap-3">
-                                    <span
-                                        class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow">
-                                        <i class="fas fa-info-circle"></i>
-                                    </span>
-                                    <div>
-                                        <dt class="font-medium text-slate-700 mb-1">Keterangan</dt>
-                                        <dd class="text-xs text-slate-600">
-                                            {{ $paket->keterangan ?? 'Tidak ada keterangan.' }}</dd>
+                            @if ($paket->jenis_pengadaan == 'Pekerjaan Konstruksi')
+                                <div class="lg:col-span-3 flex justify-end mt-2 mb-2">
+                                    <button type="button"
+                                        class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-xs font-semibold shadow hover:brightness-110 transition"
+                                        data-modal-target="edit-kategori-modal"
+                                        data-modal-toggle="edit-kategori-modal">
+                                        <i class="fas fa-edit"></i>
+                                        Edit Kategori / Jenis / Umur
+                                    </button>
+                                </div>
+                                <div
+                                    class="lg:col-span-1 bg-blue-50 border border-blue-100 rounded-xl p-4 flex flex-col items-start mb-2">
+                                    <dt class="font-medium text-blue-700 flex items-center gap-2">
+                                        <i class="fas fa-tags"></i>
+                                        Kategori
+                                    </dt>
+                                    <dd class="mt-1 text-blue-900 font-semibold">{{ $paket->kategori ?? '-' }}</dd>
+                                </div>
+                                <div
+                                    class="lg:col-span-1 bg-cyan-50 border border-cyan-100 rounded-xl p-4 flex flex-col items-start mb-2">
+                                    <dt class="font-medium text-cyan-700 flex items-center gap-2">
+                                        <i class="fas fa-list"></i>
+                                        Jenis
+                                    </dt>
+                                    <dd class="mt-1 text-cyan-900 font-semibold">{{ $paket->jenis ?? '-' }}</dd>
+                                </div>
+                                <div
+                                    class="lg:col-span-1 bg-teal-50 border border-teal-100 rounded-xl p-4 flex flex-col items-start mb-2">
+                                    <dt class="font-medium text-teal-700 flex items-center gap-2">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        Umur
+                                    </dt>
+                                    <dd class="mt-1 text-teal-900 font-semibold">
+                                        @if ($paket->umur)
+                                            @php
+                                                $umurDate = \Carbon\Carbon::parse($paket->umur);
+                                                $now = \Carbon\Carbon::now();
+                                                $diff = $umurDate->diff($now);
+                                                $years = $diff->y;
+                                                $months = $diff->m;
+                                                $days = $diff->d;
+                                            @endphp
+                                            {{ $years > 0 ? $years . ' tahun ' : '' }}{{ $months > 0 ? $months . ' bulan ' : '' }}{{ $days > 0 ? $days . ' hari' : '' }}
+                                        @else
+                                            -
+                                        @endif
+                                    </dd>
+                                </div>
+                                <div class="lg:col-span-3 mb-2">
+                                    <div
+                                        class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-start gap-3">
+                                        <span
+                                            class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+                                        <div>
+                                            <dt class="font-medium text-slate-700 mb-1">Keterangan</dt>
+                                            <dd class="text-xs text-slate-600">
+                                                {{ $paket->keterangan ?? 'Tidak ada keterangan.' }}</dd>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
 
                         </dl>
                     </div>
@@ -480,13 +484,17 @@
                                             {{ $paket->kategori == 'Bangunan Utilitas Umum' ? 'selected' : '' }}>
                                             Bangunan Utilitas Umum</option>
                                         <option value="Jalan Nasional"
-                                            {{ $paket->kategori == 'Jalan Nasional' ? 'selected' : '' }}>Jalan Nasional</option>
+                                            {{ $paket->kategori == 'Jalan Nasional' ? 'selected' : '' }}>Jalan Nasional
+                                        </option>
                                         <option value="Jalan Provinsi"
-                                            {{ $paket->kategori == 'Jalan Provinsi' ? 'selected' : '' }}>Jalan Provinsi</option>
+                                            {{ $paket->kategori == 'Jalan Provinsi' ? 'selected' : '' }}>Jalan Provinsi
+                                        </option>
                                         <option value="Jalan Kabupaten/Kota"
-                                            {{ $paket->kategori == 'Jalan Kabupaten/Kota' ? 'selected' : '' }}>Jalan Kabupaten/Kota</option>
+                                            {{ $paket->kategori == 'Jalan Kabupaten/Kota' ? 'selected' : '' }}>Jalan
+                                            Kabupaten/Kota</option>
                                         <option value="Jalan Desa"
-                                            {{ $paket->kategori == 'Jalan Desa' ? 'selected' : '' }}>Jalan Desa</option>
+                                            {{ $paket->kategori == 'Jalan Desa' ? 'selected' : '' }}>Jalan Desa
+                                        </option>
                                     </select>
                                 </div>
                                 <div id="jenis-container">
