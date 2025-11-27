@@ -68,7 +68,6 @@ class MasterdataController extends Controller
         $request->validate([
             'sumber_dana' => 'nullable|string|max:255',
             'sub_sumberdana' => 'nullable|string|max:255',
-            'bidang' => 'nullable|string|max:255',
             'nilai_kontrak' => 'nullable|string',
             'nilai_penawaran' => 'nullable|string',
             'nama_penyedia' => 'nullable|string|max:255',
@@ -81,7 +80,6 @@ class MasterdataController extends Controller
         $paket->update([
             'sumber_dana' => $request->input('sumber_dana'),
             'sub_sumberdana' => $request->input('sub_sumberdana'),
-            'bidang' => $request->input('bidang'),
         ]);
 
         $kdTender = $paket->kd_tender ?? $paket->kd_nontender;
