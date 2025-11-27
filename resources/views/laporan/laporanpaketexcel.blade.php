@@ -9,7 +9,8 @@
                 {{ strtoupper('Dinas Pekerjaan Umum dan Tata Ruang') }}</th>
         </tr>
         <tr>
-            <th colspan="20" style="text-align: center; font-size: 10pt;">Alamat: Jl. Cenderawasih No. 1, Timika, Papua
+            <th colspan="20" style="text-align: center; font-size: 10pt;">Alamat: Jl. Cenderawasih SP.III Kantor Pusat
+                Pemerintahan Gedung D Lt.1, Timika 99911
             </th>
         </tr>
         <tr>
@@ -38,6 +39,9 @@
             <th rowspan="2"
                 style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 200px;">
                 Sumber Dana</th>
+            <th rowspan="2"
+                style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 200px;">
+                Sub Sumber Dana</th>
             <th rowspan="2"
                 style="border: 1px solid black; text-align: center; vertical-align: middle; font-weight: bold; width: 250px;">
                 Jenis Pengadaan</th>
@@ -118,6 +122,7 @@
                     {{ $p->nama_ppk ? ucwords(strtolower($p->nama_ppk)) : '-' }} -
                     {{ $p->nip_ppk }}</td>
                 <td style="border: 1px solid black; white-space: normal;">{{ $p->sumber_dana ?? '-' }}</td>
+                <td style="border: 1px solid black; white-space: normal;">{{ $p->sub_sumberdana ?? '-' }}</td>
                 <td style="border: 1px solid black; white-space: normal;">{{ $p->jenis_pengadaan ?? '-' }}</td>
                 <td style="border: 1px solid black; white-space: normal;">{{ $p->metode_pengadaan ?? '-' }}</td>
                 <td style="border: 1px solid black; white-space: normal;">{{ $p->nama_penyedia ?? '-' }}</td>
@@ -149,4 +154,62 @@
             </tr>
         @endforelse
     </tbody>
+</table>
+<table style="width:100%; border:none; margin-top:40px;">
+    <tr>
+        <td style=" text-align:center; border:none;" colspan="10">
+
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+            Mengetahui,
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+            Kepala Bidang
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+            Kepala Dinas
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+            <b><u>{{ $kabid ?? 'Nama Kepala Bidang' }}</u></b>
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+            <b><u>{{ $kadis ?? 'Nama Kepala Dinas' }}</u></b>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="10">
+            NIP. {{ $nip_kabid ?? '-' }}
+        </td>
+        <td style="text-align:center; border:none;" colspan="10">
+            NIP. {{ $nip_kadis ?? '-' }}
+        </td>
+    </tr>
 </table>

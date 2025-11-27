@@ -128,7 +128,7 @@
             <td class="header-text" style="width: 60%; text-align: center; border: none;">
                 <h1>PEMERINTAH KABUPATEN MIMIKA</h1>
                 <h2>{{ strtoupper('Dinas Pekerjaan Umum dan Tata Ruang') }}</h2>
-                <p>Alamat: Jl. Cenderawasih No. 1, Timika, Papua</p>
+                <p>Alamat: Jl. Cenderawasih SP.III Kantor Pusat Pemerintahan Gedung D Lt.1, Timika 99911</p>
             </td>
             <td style="width: 20%; border: none;"></td>
             </tr>
@@ -147,6 +147,7 @@
                 <th colspan="5">Nilai (Rp)</th>
                 <th rowspan="2">PPK</th>
                 <th rowspan="2">Sumber Dana</th>
+                <th rowspan="2">Sub Sumber Dana</th>
                 <th rowspan="2">Jenis Pengadaan</th>
                 <th rowspan="2">Metode Pengadaan</th>
                 <th colspan="4">Penyedia</th>
@@ -186,6 +187,7 @@
                     </td>
                     <td>{{ $p->nama_ppk ? ucwords(strtolower($p->nama_ppk)) : '-' }} - {{ $p->nip_ppk }}</td>
                     <td>{{ $p->sumber_dana ?? '-' }}</td>
+                    <td>{{ $p->sub_sumberdana ?? '-' }}</td>
                     <td>{{ $p->jenis_pengadaan ?? '-' }}</td>
                     <td>{{ $p->metode_pengadaan ?? '-' }}</td>
                     <td>{{ $p->nama_penyedia ?? '-' }}</td>
@@ -215,6 +217,24 @@
                 </tr>
             @endforelse
         </tbody>
+    </table>
+
+    <br><br>
+    <table style="width:100%; border:none; margin-top:40px;">
+        <tr>
+            <td style="width:50%; text-align:center; border:none;">
+               <br>
+                Kepala Bidang<br><br><br><br><br>
+                <b><u>{{ $kabid ?? 'Nama Kepala Bidang' }}</u></b><br>
+                NIP. {{ $nip_kabid ?? '-' }}
+            </td>
+            <td style="width:50%; text-align:center; border:none;">
+                 Mengetahui,<br>
+                Kepala Dinas<br><br><br><br><br>
+                <b><u>{{ $kadis ?? 'Nama Kepala Dinas' }}</u></b><br>
+                NIP. {{ $nip_kadis ?? '-' }}
+            </td>
+        </tr>
     </table>
 
 </body>

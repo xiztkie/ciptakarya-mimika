@@ -34,7 +34,7 @@
                 </div>
 
                 <form method="GET" action="{{ route('laporanperpenyedia') }}">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                         <div>
                             <label for="tahun_anggaran"
                                 class="block text-xs font-semibold text-gray-700 mb-1">Tahun</label>
@@ -45,19 +45,6 @@
                                     <option value="{{ $opt->tahun_anggaran }}"
                                         {{ request('tahun_anggaran') == $opt->tahun_anggaran ? 'selected' : '' }}>
                                         {{ $opt->tahun_anggaran }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label for="bidang" class="block text-xs font-semibold text-gray-700 mb-1">Bidang</label>
-                            <select name="bidang" id="bidang"
-                                class="w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                <option value="">Semua</option>
-                                @foreach ($bidang as $opt)
-                                    <option value="{{ $opt->nama_bidang }}"
-                                        {{ request('bidang') == $opt->nama_bidang ? 'selected' : '' }}>
-                                        {{ $opt->nama_bidang }}
                                     </option>
                                 @endforeach
                             </select>
@@ -143,20 +130,19 @@
                                 class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
                                 style="display: none;">
                                 <div class="py-1">
-                                    <a href="{{ route('exportexcelaporanperpenyedia', request()->query()) }}"
-                                        target="_blank"
+                                    <button type="button" data-modal-target="excelmodal"
+                                        data-modal-toggle="excelmodal"
                                         class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                         <img src="https://img.icons8.com/color/16/000000/ms-excel.png" class="mr-2"
                                             alt="Excel icon" />
                                         Export Excel
-                                    </a>
-                                    <a href="{{ route('exportpdflaporanperpenyedia', request()->query()) }}"
-                                        target="_blank"
+                                    </button>
+                                    <button type="button" data-modal-target="pdfmodal" data-modal-toggle="pdfmodal"
                                         class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">
                                         <img src="https://img.icons8.com/color/16/000000/pdf.png" class="mr-2"
                                             alt="PDF icon" />
                                         Export PDF
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -216,11 +202,13 @@
                                     {{ $item->nama_penyedia }}</td>
                                 <td class="px-2 py-2 text-center align-middle border border-gray-200">
                                     @if ($item->oap == 1)
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">
                                             OAP
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800">
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800">
                                             Non OAP
                                         </span>
                                     @endif
@@ -253,6 +241,154 @@
                     </div>
                 </div>
             @endif
+        </div>
+    </div>
+
+    <div id="excelmodal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full bg-black/30 backdrop-blur-sm">
+        <div class="relative w-full max-w-2xl mx-auto h-full flex items-center">
+            <div class="relative bg-white rounded-2xl shadow-2xl w-full max-h-[90vh] overflow-hidden">
+                <div class="h-1 w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-500"></div>
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-600 to-teal-600 text-white shadow-sm">
+                            <img src="https://img.icons8.com/color/24/000000/ms-excel.png" alt="Excel icon" />
+                        </span>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Export Data Excel</h3>
+                            <p class="text-xs text-slate-500">Unduh data paket pengadaan dalam format Excel</p>
+                        </div>
+                    </div>
+                    <button type="button"
+                        class="text-slate-400 bg-transparent hover:bg-slate-100 hover:text-slate-900 rounded-lg text-sm p-2 inline-flex items-center transition"
+                        data-modal-hide="excelmodal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form method="GET" action="{{ route('exportexcelaporanperpenyedia', request()->query()) }}"
+                    class="px-6 py-6 space-y-6 overflow-y-auto max-h-[calc(90vh-180px)]">
+                    @foreach (request()->query() as $key => $value)
+                        <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                    @endforeach
+                    <div>
+                        <label for="nama_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">Nama
+                            Kepala Dinas</label>
+                        <input type="text" name="nama_kepala_dinas" id="nama_kepala_dinas" required
+                            placeholder="Masukan Nama Kepala Dinas . . ."
+                            class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
+                    </div>
+                    <div>
+                        <label for="nip_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">NIP
+                            Kepala Dinas</label>
+                        <input type="text" name="nip_kepala_dinas" id="nip_kepala_dinas" required
+                            placeholder="Masukan NIP Kepala Dinas"
+                            class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
+                    </div>
+                    <div>
+                        <label for="nama_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">Nama
+                            Kepala Bidang</label>
+                        <input type="text" name="nama_kepala_bidang" id="nama_kepala_bidang" required
+                            placeholder="Masukan Nama Kepala Bidang . . ."
+                            class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
+                    </div>
+                    <div>
+                        <label for="nip_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">NIP
+                            Kepala Bidang</label>
+                        <input type="text" name="nip_kepala_bidang" id="nip_kepala_bidang" required
+                            placeholder="Masukan NIP Kepala Bidang . . ."
+                            class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
+                    </div>
+                    <div class="flex justify-end items-center pt-4 border-t border-slate-200 gap-2">
+                        <button type="button" data-modal-hide="excelmodal"
+                            class="px-4 py-2 text-sm font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-green-600 to-teal-600 text-white hover:brightness-110 transition">
+                            <i class="fas fa-file-excel mr-2"></i>Export
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="pdfmodal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full bg-black/30 backdrop-blur-sm">
+        <div class="relative w-full max-w-2xl mx-auto h-full flex items-center">
+            <div class="relative bg-white rounded-2xl shadow-2xl w-full max-h-[90vh] overflow-hidden">
+                <div class="h-1 w-full bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-500"></div>
+                <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-red-600 to-pink-600 text-white shadow-sm">
+                            <img src="https://img.icons8.com/color/24/000000/pdf.png" alt="PDF icon" />
+                        </span>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Export Data PDF</h3>
+                            <p class="text-xs text-slate-500">Unduh data paket pengadaan dalam format PDF</p>
+                        </div>
+                    </div>
+                    <button type="button"
+                        class="text-slate-400 bg-transparent hover:bg-slate-100 hover:text-slate-900 rounded-lg text-sm p-2 inline-flex items-center transition"
+                        data-modal-hide="pdfmodal">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <form method="GET" action="{{ route('exportpdflaporanperpenyedia', request()->query()) }}" target="_blank"
+                    class="px-6 py-6 space-y-6 overflow-y-auto max-h-[calc(90vh-180px)]">
+                    @foreach (request()->query() as $key => $value)
+                        <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                    @endforeach
+                    <div>
+                        <label for="nama_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">Nama
+                            Kepala Dinas</label>
+                        <input type="text" name="nama_kepala_dinas" id="nama_kepala_dinas" required
+                            placeholder="Masukan Nama Kepala Dinas . . ."
+                            class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
+                    </div>
+                    <div>
+                        <label for="nip_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">NIP
+                            Kepala Dinas</label>
+                        <input type="text" name="nip_kepala_dinas" id="nip_kepala_dinas" required
+                            placeholder="Masukan NIP Kepala Dinas . . ."
+                            class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
+                    </div>
+                    <div>
+                        <label for="nama_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">Nama
+                            Kepala Bidang</label>
+                        <input type="text" name="nama_kepala_bidang" id="nama_kepala_bidang" required
+                            placeholder="Masukan Nama Kepala Bidang . . ."
+                            class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
+                    </div>
+                    <div>
+                        <label for="nip_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">NIP
+                            Kepala Bidang</label>
+                        <input type="text" name="nip_kepala_bidang" id="nip_kepala_bidang" required
+                            placeholder="Masukan NIP Kepala Bidang . . ."
+                            class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
+                    </div>
+                    <div class="flex justify-end items-center pt-4 border-t border-slate-200 gap-2">
+                        <button type="button" data-modal-hide="pdfmodal"
+                            class="px-4 py-2 text-sm font-semibold rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-red-600 to-pink-600 text-white hover:brightness-110 transition">
+                            <i class="fas fa-file-pdf mr-2"></i>Export
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </x-app-layout>
