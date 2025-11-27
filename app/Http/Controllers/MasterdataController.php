@@ -67,6 +67,7 @@ class MasterdataController extends Controller
         $ids = decrypt($id);
         $request->validate([
             'sumber_dana' => 'nullable|string|max:255',
+            'sub_sumberdana' => 'nullable|string|max:255',
             'bidang' => 'nullable|string|max:255',
             'nilai_kontrak' => 'nullable|string',
             'nilai_penawaran' => 'nullable|string',
@@ -79,6 +80,7 @@ class MasterdataController extends Controller
         $paket = PaketModel::findOrFail($ids);
         $paket->update([
             'sumber_dana' => $request->input('sumber_dana'),
+            'sub_sumberdana' => $request->input('sub_sumberdana'),
             'bidang' => $request->input('bidang'),
         ]);
 

@@ -53,7 +53,7 @@
                     </div>
 
                     <div id="maps-modal-{{ $paket->id }}" tabindex="-1"
-                        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 min-h-screen bg-black/30 backdrop-blur-sm">
                         <div class="relative w-full max-w-2xl max-h-full">
                             <div class="relative bg-white rounded-xl shadow-sm">
                                 <div class="flex items-center justify-between p-4 border-b rounded-t-xl bg-blue-600">
@@ -81,16 +81,14 @@
                                                     class="block mb-2 text-sm font-medium text-gray-900">Latitude:</label>
                                                 <input type="text" id="latitude-{{ $paket->id }}" name="latitude"
                                                     value="{{ $paket->latitude }}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                                                    readonly>
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                                             </div>
                                             <div>
                                                 <label for="longitude-{{ $paket->id }}"
                                                     class="block mb-2 text-sm font-medium text-gray-900">Longitude:</label>
                                                 <input type="text" id="longitude-{{ $paket->id }}"
                                                     name="longitude" value="{{ $paket->longitude }}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-                                                    readonly>
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +180,7 @@
                             </div>
                             <div>
                                 <dt class="font-medium text-gray-500">Lokasi</dt>
-                                <dd class="mt-1 text-gray-700">{{ $paket->lokasi ?? '-' }}</dd>
+                                <dd class="mt-1 text-gray-700">{{ $paket->detail_lokasi ?? '-' }}</dd>
                             </div>
                             <div>
                                 <dt class="font-medium text-gray-500">Kode RUP</dt>
@@ -259,21 +257,24 @@
                                     Edit Kategori / Jenis / Umur
                                 </button>
                             </div>
-                            <div class="lg:col-span-1 bg-blue-50 border border-blue-100 rounded-xl p-4 flex flex-col items-start mb-2">
+                            <div
+                                class="lg:col-span-1 bg-blue-50 border border-blue-100 rounded-xl p-4 flex flex-col items-start mb-2">
                                 <dt class="font-medium text-blue-700 flex items-center gap-2">
                                     <i class="fas fa-tags"></i>
                                     Kategori
                                 </dt>
                                 <dd class="mt-1 text-blue-900 font-semibold">{{ $paket->kategori ?? '-' }}</dd>
                             </div>
-                            <div class="lg:col-span-1 bg-cyan-50 border border-cyan-100 rounded-xl p-4 flex flex-col items-start mb-2">
+                            <div
+                                class="lg:col-span-1 bg-cyan-50 border border-cyan-100 rounded-xl p-4 flex flex-col items-start mb-2">
                                 <dt class="font-medium text-cyan-700 flex items-center gap-2">
                                     <i class="fas fa-list"></i>
                                     Jenis
                                 </dt>
                                 <dd class="mt-1 text-cyan-900 font-semibold">{{ $paket->jenis ?? '-' }}</dd>
                             </div>
-                            <div class="lg:col-span-1 bg-teal-50 border border-teal-100 rounded-xl p-4 flex flex-col items-start mb-2">
+                            <div
+                                class="lg:col-span-1 bg-teal-50 border border-teal-100 rounded-xl p-4 flex flex-col items-start mb-2">
                                 <dt class="font-medium text-teal-700 flex items-center gap-2">
                                     <i class="fas fa-calendar-alt"></i>
                                     Umur
@@ -296,12 +297,14 @@
                             </div>
                             <div class="lg:col-span-3 mb-2">
                                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-start gap-3">
-                                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow">
+                                    <span
+                                        class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 text-white shadow">
                                         <i class="fas fa-info-circle"></i>
                                     </span>
                                     <div>
                                         <dt class="font-medium text-slate-700 mb-1">Keterangan</dt>
-                                        <dd class="text-xs text-slate-600">{{ $paket->keterangan ?? 'Tidak ada keterangan.' }}</dd>
+                                        <dd class="text-xs text-slate-600">
+                                            {{ $paket->keterangan ?? 'Tidak ada keterangan.' }}</dd>
                                     </div>
                                 </div>
                             </div>
@@ -420,8 +423,10 @@
                                         <i class="fas fa-tags text-lg"></i>
                                     </span>
                                     <div>
-                                        <h3 class="text-lg font-bold text-slate-900">Edit Kategori, Jenis, dan Umur</h3>
-                                        <p class="text-xs text-slate-500">Ubah data kategori, jenis, umur, dan keterangan paket</p>
+                                        <h3 class="text-lg font-bold text-slate-900">Edit Kategori, Jenis, dan Umur
+                                        </h3>
+                                        <p class="text-xs text-slate-500">Ubah data kategori, jenis, umur, dan
+                                            keterangan paket</p>
                                     </div>
                                 </div>
                                 <button type="button"
@@ -434,7 +439,8 @@
                                     </svg>
                                 </button>
                             </div>
-                            <form method="POST" action="{{ route('editpaketdetail', ['id' => encrypt($paket->id)]) }}"
+                            <form method="POST"
+                                action="{{ route('editpaketdetail', ['id' => encrypt($paket->id)]) }}"
                                 class="px-6 py-6 space-y-6 overflow-y-auto max-h-[calc(90vh-180px)]">
                                 @csrf
                                 <div>
@@ -443,16 +449,36 @@
                                     <select id="kategori" name="kategori"
                                         class="mt-1 block w-full rounded-lg border border-blue-200 bg-blue-50 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm transition">
                                         <option value="">Pilih Kategori Bangunan</option>
-                                        <option value="Bangunan Hunian" {{ $paket->kategori == 'Bangunan Hunian' ? 'selected' : '' }}>Bangunan Hunian</option>
-                                        <option value="Bangunan Keagamaan" {{ $paket->kategori == 'Bangunan Keagamaan' ? 'selected' : '' }}>Bangunan Keagamaan</option>
-                                        <option value="Bangunan Usaha (Komersial)" {{ $paket->kategori == 'Bangunan Usaha (Komersial)' ? 'selected' : '' }}>Bangunan Usaha (Komersial)</option>
-                                        <option value="Bangunan Sosial dan Budaya" {{ $paket->kategori == 'Bangunan Sosial dan Budaya' ? 'selected' : '' }}>Bangunan Sosial dan Budaya</option>
-                                        <option value="Bangunan Khusus" {{ $paket->kategori == 'Bangunan Khusus' ? 'selected' : '' }}>Bangunan Khusus</option>
-                                        <option value="Bangunan Negara / Pemerintah" {{ $paket->kategori == 'Bangunan Negara / Pemerintah' ? 'selected' : '' }}>Bangunan Negara / Pemerintah</option>
-                                        <option value="Bangunan Industri" {{ $paket->kategori == 'Bangunan Industri' ? 'selected' : '' }}>Bangunan Industri</option>
-                                        <option value="Bangunan Pertanian / Perkebunan" {{ $paket->kategori == 'Bangunan Pertanian / Perkebunan' ? 'selected' : '' }}>Bangunan Pertanian / Perkebunan</option>
-                                        <option value="Bangunan Transportasi" {{ $paket->kategori == 'Bangunan Transportasi' ? 'selected' : '' }}>Bangunan Transportasi</option>
-                                        <option value="Bangunan Utilitas Umum" {{ $paket->kategori == 'Bangunan Utilitas Umum' ? 'selected' : '' }}>Bangunan Utilitas Umum</option>
+                                        <option value="Bangunan Hunian"
+                                            {{ $paket->kategori == 'Bangunan Hunian' ? 'selected' : '' }}>Bangunan
+                                            Hunian</option>
+                                        <option value="Bangunan Keagamaan"
+                                            {{ $paket->kategori == 'Bangunan Keagamaan' ? 'selected' : '' }}>Bangunan
+                                            Keagamaan</option>
+                                        <option value="Bangunan Usaha (Komersial)"
+                                            {{ $paket->kategori == 'Bangunan Usaha (Komersial)' ? 'selected' : '' }}>
+                                            Bangunan Usaha (Komersial)</option>
+                                        <option value="Bangunan Sosial dan Budaya"
+                                            {{ $paket->kategori == 'Bangunan Sosial dan Budaya' ? 'selected' : '' }}>
+                                            Bangunan Sosial dan Budaya</option>
+                                        <option value="Bangunan Khusus"
+                                            {{ $paket->kategori == 'Bangunan Khusus' ? 'selected' : '' }}>Bangunan
+                                            Khusus</option>
+                                        <option value="Bangunan Negara / Pemerintah"
+                                            {{ $paket->kategori == 'Bangunan Negara / Pemerintah' ? 'selected' : '' }}>
+                                            Bangunan Negara / Pemerintah</option>
+                                        <option value="Bangunan Industri"
+                                            {{ $paket->kategori == 'Bangunan Industri' ? 'selected' : '' }}>Bangunan
+                                            Industri</option>
+                                        <option value="Bangunan Pertanian / Perkebunan"
+                                            {{ $paket->kategori == 'Bangunan Pertanian / Perkebunan' ? 'selected' : '' }}>
+                                            Bangunan Pertanian / Perkebunan</option>
+                                        <option value="Bangunan Transportasi"
+                                            {{ $paket->kategori == 'Bangunan Transportasi' ? 'selected' : '' }}>
+                                            Bangunan Transportasi</option>
+                                        <option value="Bangunan Utilitas Umum"
+                                            {{ $paket->kategori == 'Bangunan Utilitas Umum' ? 'selected' : '' }}>
+                                            Bangunan Utilitas Umum</option>
                                     </select>
                                 </div>
                                 <div>
@@ -466,8 +492,7 @@
                                 <div>
                                     <label for="umur"
                                         class="block mb-2 text-sm font-semibold text-slate-700">Umur</label>
-                                    <input type="date" id="umur" name="umur"
-                                        value="{{ $paket->umur }}"
+                                    <input type="date" id="umur" name="umur" value="{{ $paket->umur }}"
                                         class="mt-1 block w-full rounded-lg border border-teal-200 bg-teal-50 shadow-sm focus:border-teal-500 focus:ring-teal-500 text-sm transition">
                                 </div>
                                 <div>
@@ -477,7 +502,8 @@
                                         <textarea id="keterangan" name="keterangan" rows="3"
                                             class="mt-1 block w-full rounded-xl border border-blue-200 bg-blue-50 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-300 text-sm resize-none transition duration-150 ease-in-out px-4 py-3 placeholder:text-blue-400"
                                             placeholder="Tulis keterangan paket di sini...">{{ $paket->keterangan }}</textarea>
-                                        <span class="absolute right-3 bottom-3 text-xs text-blue-400 select-none pointer-events-none">
+                                        <span
+                                            class="absolute right-3 bottom-3 text-xs text-blue-400 select-none pointer-events-none">
                                             <i class="fas fa-pencil-alt mr-1"></i>Keterangan
                                         </span>
                                     </div>
@@ -537,7 +563,7 @@
                                             const option = document.createElement('option');
                                             option.value = jenis;
                                             option.textContent = jenis;
-                                            @if($paket->jenis)
+                                            @if ($paket->jenis)
                                                 if (jenis === @json($paket->jenis)) {
                                                     option.selected = true;
                                                 }
