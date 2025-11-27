@@ -20,6 +20,7 @@ class PaketModel extends Model
         'pagu',
         'hps',
         'sumber_dana',
+        'sub_sumberdana',
         'metode_pengadaan',
         'jenis_pengadaan',
         'nip_nama_ppk',

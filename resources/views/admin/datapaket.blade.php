@@ -276,6 +276,12 @@
                                                     {{ $item->sumber_dana }}
                                                 </span>
                                             @endif
+                                            @if ($item->sub_sumberdana)
+                                                <span
+                                                    class="inline-flex items-center px-1 py-0.5 text-[9px] font-medium bg-blue-100 text-blue-800 rounded-full border border-blue-200">
+                                                    {{ $item->sub_sumberdana }}
+                                                </span>
+                                            @endif
                                             @if ($item->jenis_pengadaan)
                                                 <span
                                                     class="inline-flex items-center px-1 py-0.5 text-[9px] font-medium bg-purple-100 text-purple-800 rounded-full border border-purple-200">
@@ -441,64 +447,63 @@
                                             <label for="bidang{{ $item->id }}"
                                                 class="flex items-center text-xs font-semibold text-gray-700">
                                                 <i class="fas fa-briefcase text-indigo-500 mr-1 text-xs"></i>
-                                                Bidang
-                                            </label>
-                                            <select name="bidang" id="bidang{{ $item->id }}"
-                                                class="w-full px-2 sm:px-3 py-2 rounded-lg border border-gray-200 bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200 text-xs">
-                                                <option value="">Pilih Bidang</option>
-                                                @foreach ($bidang as $b)
-                                                    <option value="{{ $b->nama_bidang }}"
-                                                        {{ old('bidang', $item->bidang) == $b->nama_bidang ? 'selected' : '' }}>
-                                                        {{ $b->nama_bidang }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="space-y-1">
-                                            <label for="sumber_dana{{ $item->id }}"
-                                                class="flex items-center text-xs font-semibold text-gray-700">
-                                                <i class="fas fa-coins text-green-500 mr-1 text-xs"></i>
                                                 Sumber Dana
                                             </label>
                                             <select name="sumber_dana" id="sumber_dana{{ $item->id }}"
                                                 class="w-full px-2 sm:px-3 py-2 rounded-lg border border-gray-200 bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200 text-xs">
-                                                <option value="">Pilih Sumber Dana</option>
+                                                <option value="">Pilih Sub Sumber Dana</option>
+                                                <option value="APBD"
+                                                    {{ old('sumber_dana', $item->sumber_dana) == 'APBD' ? 'selected' : '' }}>
+                                                    APBD</option>
+                                                <option value="APBDP"
+                                                    {{ old('sumber_dana', $item->sumber_dana) == 'APBDP' ? 'selected' : '' }}>
+                                                    APBDP</option>
+                                            </select>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <label for="sub_sumberdana{{ $item->id }}"
+                                                class="flex items-center text-xs font-semibold text-gray-700">
+                                                <i class="fas fa-coins text-green-500 mr-1 text-xs"></i>
+                                                Sub Sumber Dana
+                                            </label>
+                                            <select name="sub_sumberdana" id="sub_sumberdana{{ $item->id }}"
+                                                class="w-full px-2 sm:px-3 py-2 rounded-lg border border-gray-200 bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all duration-200 text-xs">
+                                                <option value="">Pilih Sub Sumber Dana</option>
                                                 <option value="DAK"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DAK' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DAK' ? 'selected' : '' }}>
                                                     DAK</option>
                                                 <option value="DAU"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DAU' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DAU' ? 'selected' : '' }}>
                                                     DAU</option>
                                                 <option value="DTU"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DTU' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DTU' ? 'selected' : '' }}>
                                                     DTU</option>
                                                 <option value="OTSUS 1,25%"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'OTSUS 1,25%' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'OTSUS 1,25%' ? 'selected' : '' }}>
                                                     OTSUS 1,25%</option>
                                                 <option value="OTSUS 1%"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'OTSUS 1%' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'OTSUS 1%' ? 'selected' : '' }}>
                                                     OTSUS 1%</option>
                                                 <option value="DTI"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DTI' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DTI' ? 'selected' : '' }}>
                                                     DTI</option>
                                                 <option value="DBH MIGAS OTSUS"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DBH MIGAS OTSUS' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DBH MIGAS OTSUS' ? 'selected' : '' }}>
                                                     DBH MIGAS OTSUS</option>
                                                 <option value="DAU YANG DITENTUKAN"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DAU YANG DITENTUKAN' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DAU YANG DITENTUKAN' ? 'selected' : '' }}>
                                                     DAU YANG DITENTUKAN</option>
                                                 <option value="DAK NON FISIK"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DAK NON FISIK' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DAK NON FISIK' ? 'selected' : '' }}>
                                                     DAK NON FISIK</option>
                                                 <option value="PAD"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'PAD' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'PAD' ? 'selected' : '' }}>
                                                     PAD</option>
                                                 <option value="DBH PUSAT"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DBH PUSAT' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DBH PUSAT' ? 'selected' : '' }}>
                                                     DBH PUSAT</option>
                                                 <option value="DBH PAJAK PROVINSI"
-                                                    {{ old('sumber_dana', $item->sumber_dana) == 'DBH PAJAK PROVINSI' ? 'selected' : '' }}>
+                                                    {{ old('sub_sumberdana', $item->sub_sumberdana) == 'DBH PAJAK PROVINSI' ? 'selected' : '' }}>
                                                     DBH PAJAK PROVINSI</option>
                                             </select>
                                         </div>
