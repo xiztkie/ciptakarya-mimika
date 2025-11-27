@@ -479,9 +479,17 @@
                                         <option value="Bangunan Utilitas Umum"
                                             {{ $paket->kategori == 'Bangunan Utilitas Umum' ? 'selected' : '' }}>
                                             Bangunan Utilitas Umum</option>
+                                        <option value="Jalan Nasional"
+                                            {{ $paket->kategori == 'Jalan Nasional' ? 'selected' : '' }}>Jalan Nasional</option>
+                                        <option value="Jalan Provinsi"
+                                            {{ $paket->kategori == 'Jalan Provinsi' ? 'selected' : '' }}>Jalan Provinsi</option>
+                                        <option value="Jalan Kabupaten/Kota"
+                                            {{ $paket->kategori == 'Jalan Kabupaten/Kota' ? 'selected' : '' }}>Jalan Kabupaten/Kota</option>
+                                        <option value="Jalan Desa"
+                                            {{ $paket->kategori == 'Jalan Desa' ? 'selected' : '' }}>Jalan Desa</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div id="jenis-container">
                                     <label for="jenis"
                                         class="block mb-2 text-sm font-semibold text-slate-700">Jenis</label>
                                     <select id="jenis" name="jenis"
@@ -553,23 +561,39 @@
                                     ]
                                 };
 
+                                const kategoriJalan = [
+                                    "Jalan Nasional",
+                                    "Jalan Provinsi",
+                                    "Jalan Kabupaten/Kota",
+                                    "Jalan Desa"
+                                ];
+
                                 function updateJenisOptions() {
                                     const kategoriSelect = document.getElementById('kategori');
                                     const jenisSelect = document.getElementById('jenis');
+                                    const jenisContainer = document.getElementById('jenis-container');
                                     const selectedKategori = kategoriSelect.value;
-                                    jenisSelect.innerHTML = '<option value="">Pilih Jenis Bangunan</option>';
-                                    if (jenisOptions[selectedKategori]) {
-                                        jenisOptions[selectedKategori].forEach(jenis => {
-                                            const option = document.createElement('option');
-                                            option.value = jenis;
-                                            option.textContent = jenis;
-                                            @if ($paket->jenis)
-                                                if (jenis === @json($paket->jenis)) {
-                                                    option.selected = true;
-                                                }
-                                            @endif
-                                            jenisSelect.appendChild(option);
-                                        });
+
+                                    // Hide jenis if kategori jalan
+                                    if (kategoriJalan.includes(selectedKategori)) {
+                                        jenisContainer.style.display = 'none';
+                                        jenisSelect.value = '';
+                                    } else {
+                                        jenisContainer.style.display = '';
+                                        jenisSelect.innerHTML = '<option value="">Pilih Jenis Bangunan</option>';
+                                        if (jenisOptions[selectedKategori]) {
+                                            jenisOptions[selectedKategori].forEach(jenis => {
+                                                const option = document.createElement('option');
+                                                option.value = jenis;
+                                                option.textContent = jenis;
+                                                @if ($paket->jenis)
+                                                    if (jenis === @json($paket->jenis)) {
+                                                        option.selected = true;
+                                                    }
+                                                @endif
+                                                jenisSelect.appendChild(option);
+                                            });
+                                        }
                                     }
                                 }
 
