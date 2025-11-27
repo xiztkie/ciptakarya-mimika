@@ -65,7 +65,7 @@ class ExcellLaporanpaket implements FromView, WithStyles,  WithEvents, WithDrawi
     {
         $sheet->getStyle('G:H')->getNumberFormat()->setFormatCode('#,##0.00');
         $sheet->getStyle('A')->getNumberFormat()->setFormatCode('@');
-        $sheet->getStyle('A7:T8')->getFill()
+        $sheet->getStyle('A7:U8')->getFill()
             ->setFillType(Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
 

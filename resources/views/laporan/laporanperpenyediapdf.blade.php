@@ -195,7 +195,23 @@
             @endforeach
         </tbody>
     </table>
-
+    <br><br>
+    <table style="width:100%; border:none; margin-top:40px;">
+        <tr>
+            <td style="width:50%; text-align:center; border:none;">
+                <br>
+                Kepala Bidang<br><br><br><br><br>
+                <b><u>{{ $kabid ?? 'Nama Kepala Bidang' }}</u></b><br>
+                NIP. {{ $nip_kabid ?? '-' }}
+            </td>
+            <td style="width:50%; text-align:center; border:none;">
+                Mengetahui,<br>
+                Kepala Dinas<br><br><br><br><br>
+                <b><u>{{ $kadis ?? 'Nama Kepala Dinas' }}</u></b><br>
+                NIP. {{ $nip_kadis ?? '-' }}
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

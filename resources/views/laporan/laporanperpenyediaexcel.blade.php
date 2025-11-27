@@ -97,3 +97,61 @@
         @endforeach
     </tbody>
 </table>
+<table style="width:100%; border:none; margin-top:40px;">
+    <tr>
+        <td style=" text-align:center; border:none;" colspan="3">
+
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+            Mengetahui,
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+            Kepala Bidang
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+            Kepala Dinas
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+            <b><u>{{ $kabid ?? 'Nama Kepala Bidang' }}</u></b>
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+            <b><u>{{ $kadis ?? 'Nama Kepala Dinas' }}</u></b>
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align:center; border:none;" colspan="3">
+            NIP. {{ $nip_kabid ?? '-' }}
+        </td>
+        <td style="text-align:center; border:none;" colspan="3">
+            NIP. {{ $nip_kadis ?? '-' }}
+        </td>
+    </tr>
+</table>

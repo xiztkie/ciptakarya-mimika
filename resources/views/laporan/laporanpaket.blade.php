@@ -342,24 +342,28 @@
                         <label for="nama_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">Nama
                             Kepala Dinas</label>
                         <input type="text" name="nama_kepala_dinas" id="nama_kepala_dinas"
+                            placeholder="Masukan Nama Kepala Dinas . . ."
                             class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
                     </div>
                     <div>
                         <label for="nip_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">NIP
                             Kepala Dinas</label>
                         <input type="text" name="nip_kepala_dinas" id="nip_kepala_dinas"
+                            placeholder="Masukan NIP Kepala Dinas"
                             class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
                     </div>
                     <div>
                         <label for="nama_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">Nama
                             Kepala Bidang</label>
                         <input type="text" name="nama_kepala_bidang" id="nama_kepala_bidang"
+                            placeholder="Masukan Nama Kepala Bidang . . ."
                             class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
                     </div>
                     <div>
                         <label for="nip_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">NIP
                             Kepala Bidang</label>
                         <input type="text" name="nip_kepala_bidang" id="nip_kepala_bidang"
+                            placeholder="Masukan NIP Kepala Bidang . . ."
                             class="mt-1 block w-full rounded-lg border border-green-200 bg-green-50 shadow-sm focus:border-green-500 focus:ring-green-500 text-sm transition">
                     </div>
                     <div class="flex justify-end items-center pt-4 border-t border-slate-200 gap-2">
@@ -404,7 +408,7 @@
                     </button>
                 </div>
                 <form method="GET" action="{{ route('exportpdflaporanpaket', request()->query()) }}"
-                    class="px-6 py-6 space-y-6 overflow-y-auto max-h-[calc(90vh-180px)]">
+                    target="_blank" class="px-6 py-6 space-y-6 overflow-y-auto max-h-[calc(90vh-180px)]">
                     @foreach (request()->query() as $key => $value)
                         <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                     @endforeach
@@ -412,24 +416,28 @@
                         <label for="nama_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">Nama
                             Kepala Dinas</label>
                         <input type="text" name="nama_kepala_dinas" id="nama_kepala_dinas"
+                            placeholder="Masukan Nama Kepala Dinas . . ."
                             class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
                     </div>
                     <div>
                         <label for="nip_kepala_dinas" class="block mb-2 text-sm font-semibold text-slate-700">NIP
                             Kepala Dinas</label>
                         <input type="text" name="nip_kepala_dinas" id="nip_kepala_dinas"
+                            placeholder="Masukan NIP Kepala Dinas . . ."
                             class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
                     </div>
                     <div>
                         <label for="nama_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">Nama
                             Kepala Bidang</label>
                         <input type="text" name="nama_kepala_bidang" id="nama_kepala_bidang"
+                            placeholder="Masukan Nama Kepala Bidang . . ."
                             class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
                     </div>
                     <div>
                         <label for="nip_kepala_bidang" class="block mb-2 text-sm font-semibold text-slate-700">NIP
                             Kepala Bidang</label>
                         <input type="text" name="nip_kepala_bidang" id="nip_kepala_bidang"
+                            placeholder="Masukan NIP Kepala Bidang . . ."
                             class="mt-1 block w-full rounded-lg border border-red-200 bg-red-50 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm transition">
                     </div>
                     <div class="flex justify-end items-center pt-4 border-t border-slate-200 gap-2">

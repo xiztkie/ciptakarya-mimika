@@ -168,6 +168,10 @@ class LaporanController extends Controller
         $data = [
             'title' => 'Data Paket',
             'paket' => $paket,
+            'kadis' => $request->nama_kepala_dinas,
+            'nip_kadis' => $request->nip_kepala_dinas,
+            'kabid' => $request->nama_kepala_bidang,
+            'nip_kabid' => $request->nip_kepala_bidang,
         ];
 
 
@@ -273,6 +277,10 @@ class LaporanController extends Controller
         $data = [
             'title' => 'Data Paket',
             'paket' => $paket,
+            'kadis' => $request->nama_kepala_dinas,
+            'nip_kadis' => $request->nip_kepala_dinas,
+            'kabid' => $request->nama_kepala_bidang,
+            'nip_kabid' => $request->nip_kepala_bidang,
         ];
 
         return Excel::download(new ExcellLaporanpaket($data), 'laporan_paket_' . now('Asia/Jayapura')->format('YmdHis') . '.xlsx');
@@ -404,6 +412,10 @@ class LaporanController extends Controller
             'title' => 'Laporan Per Penyedia',
             'paket' => $paket,
             'vendor' => $vendor,
+            'kadis' => $request->nama_kepala_dinas,
+            'nip_kadis' => $request->nip_kepala_dinas,
+            'kabid' => $request->nama_kepala_bidang,
+            'nip_kabid' => $request->nip_kepala_bidang,
         ];
 
         $pdf = Pdf::loadView('laporan.laporanperpenyediapdf', $data)
@@ -493,6 +505,10 @@ class LaporanController extends Controller
             'title' => 'Laporan Per Penyedia',
             'paket' => $paket,
             'vendor' => $vendor,
+            'kadis' => $request->nama_kepala_dinas,
+            'nip_kadis' => $request->nip_kepala_dinas,
+            'kabid' => $request->nama_kepala_bidang,
+            'nip_kabid' => $request->nip_kepala_bidang,
         ];
         return Excel::download(new ExcellLaporanperpenyedia($data), 'laporan_perpenyedia_' . now('Asia/Jayapura')->format('YmdHis') . '.xlsx');
     }
