@@ -9,7 +9,7 @@
                 <form action="{{ route('dashboard') }}" method="get">
                     @csrf
                     <div class="flex flex-col sm:flex-row gap-3">
-                        <div class="relative">
+                       {{--  <div class="relative">
                             <select name="bidang" id="bidang"
                                 class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm text-sm">
                                 <option value="">Pilih Bidang</option>
@@ -17,7 +17,7 @@
                                     <option value="{{ $bidang->nama_bidang }}" {{ request('bidang') == $bidang->nama_bidang ? 'selected' : '' }}>{{ $bidang->nama_bidang }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="relative">
                             <select name="tahun_anggaran" id="tahun_anggaran"
                                 class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors shadow-sm text-sm">

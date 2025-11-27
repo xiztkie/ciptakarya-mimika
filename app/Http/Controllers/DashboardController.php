@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         if (($user->role == 'Admin')) {
             $tahun = $request->input('tahun', date('Y'));
-            $bidang = $request->input('bidang');
+            $bidang = 'Bidang Cipta Karya';
 
             $statusFilter = function ($q) {
                 $q->where(function ($subQ) {

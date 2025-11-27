@@ -70,6 +70,10 @@ class SyncController extends Controller
                 if (empty($item['kd_rup'])) {
                     continue;
                 }
+                // Filter hanya nip_ppk = 197703222008011014
+                if (($item['nip_ppk'] ?? null) !== '197703222008011014') {
+                    continue;
+                }
 
                 $rows[] = [
                     'kd_rup'            => $item['kd_rup'],
@@ -82,18 +86,19 @@ class SyncController extends Controller
                     'jenis_pengadaan'   => $item['jenis_pengadaan'] ?? null,
                     'nama_ppk'          => $item['nama_ppk'] ?? null,
                     'nip_ppk'           => $item['nip_ppk'] ?? null,
+                    'bidang'            => 'Bidang Cipta Karya',
                     'created_at'        => $now,
                     'updated_at'        => $now,
                 ];
             }
 
             if (empty($rows)) {
-                Log::warning('Tidak ada item dengan kd_rup pada respon API.');
+                Log::warning('Tidak ada item dengan kd_rup dan nip_ppk=197703222008011014 pada respon API.');
                 SyncdataModel::whereKey($id)->update(['last_synced_at' => $now]);
 
                 return back()->with([
                     'success'    => 'Sinkronisasi selesai, namun tidak ada data valid untuk diproses.',
-                    'totalData'  => PaketModel::where('tahun_anggaran', $tahun)->count(),
+                    'totalData'  => PaketModel::where('tahun_anggaran', $tahun)->where('nip_ppk', '197703222008011014')->count(),
                     'tahun'      => $tahun,
                 ]);
             }
@@ -122,7 +127,7 @@ class SyncController extends Controller
                 $totalSynced += count($chunk);
             }
 
-            $totalData = PaketModel::where('tahun_anggaran', $tahun)->count();
+            $totalData = PaketModel::where('tahun_anggaran', $tahun)->where('nip_ppk', '197703222008011014')->count();
 
             SyncdataModel::whereKey($id)->update(['last_synced_at' => $now]);
 
@@ -179,12 +184,18 @@ class SyncController extends Controller
                 return back()->with('error', 'Data lokasi penyedia tidak valid atau kosong.');
             }
 
+            // Ambil kd_rup yang ada di PaketModel untuk tahun ini
+            $paketRups = PaketModel::where('tahun_anggaran', $tahun)
+                ->pluck('kd_rup')
+                ->filter()
+                ->unique()
+                ->toArray();
+
             $mapLokasi = [];
             foreach ($data as $item) {
-                if (empty($item['kd_rup'])) {
+                if (empty($item['kd_rup']) || !in_array($item['kd_rup'], $paketRups)) {
                     continue;
                 }
-
                 if (!array_key_exists('detail_lokasi', $item) || $item['detail_lokasi'] === null) {
                     continue;
                 }
@@ -192,7 +203,7 @@ class SyncController extends Controller
             }
 
             if (empty($mapLokasi)) {
-                Log::warning('Tidak ada item lokasi valid (kd_rup + detail_lokasi) pada respon API.');
+                Log::warning('Tidak ada item lokasi valid (kd_rup + detail_lokasi) pada respon API yang cocok dengan PaketModel.');
                 SyncdataModel::whereKey($id)->update(['last_synced_at' => $now]);
 
                 return back()->with([
@@ -202,25 +213,12 @@ class SyncController extends Controller
                 ]);
             }
 
-            $existing = [];
-            $kdRups = array_keys($mapLokasi);
-            foreach (array_chunk($kdRups, 1000) as $chunk) {
-                $found = PaketModel::where('tahun_anggaran', $tahun)
-                    ->whereIn('kd_rup', $chunk)
-                    ->pluck('kd_rup')
-                    ->all();
-
-                foreach ($found as $rup) {
-                    $existing[$rup] = true;
-                }
-            }
-
             $rowsToUpdate = [];
-            foreach (array_keys($existing) as $rup) {
+            foreach ($mapLokasi as $rup => $lokasi) {
                 $rowsToUpdate[] = [
                     'kd_rup'        => $rup,
                     'tahun_anggaran' => $tahun,
-                    'detail_lokasi' => $mapLokasi[$rup],
+                    'detail_lokasi' => $lokasi,
                     'updated_at'    => $now,
                 ];
             }
@@ -233,6 +231,7 @@ class SyncController extends Controller
                     'totalData' => PaketModel::where('tahun_anggaran', $tahun)->whereNotNull('detail_lokasi')->count(),
                 ]);
             }
+
             foreach (array_chunk($rowsToUpdate, 1000) as $chunk) {
                 PaketModel::upsert(
                     $chunk,
@@ -299,9 +298,16 @@ class SyncController extends Controller
                 return back()->with('error', 'Data tender penyedia tidak valid atau kosong.');
             }
 
+            // Ambil kd_rup dari PaketModel untuk tahun ini
+            $paketRups = PaketModel::where('tahun_anggaran', $tahun)
+                ->pluck('kd_rup')
+                ->filter()
+                ->unique()
+                ->toArray();
+
             $incomingByRup = [];
             foreach ($data as $item) {
-                if (empty($item['kd_rup'])) {
+                if (empty($item['kd_rup']) || !in_array($item['kd_rup'], $paketRups)) {
                     continue;
                 }
 
@@ -322,7 +328,7 @@ class SyncController extends Controller
             }
 
             if (empty($incomingByRup)) {
-                Log::warning('Tidak ada item tender valid (kd_rup + salah satu dari kd_tender/status_tender/hps) pada respon API.');
+                Log::warning('Tidak ada item tender valid (kd_rup + salah satu dari kd_tender/status_tender/hps) pada respon API yang cocok dengan PaketModel.');
                 SyncdataModel::whereKey($id)->update(['last_synced_at' => $now]);
 
                 return back()->with([
@@ -427,9 +433,16 @@ class SyncController extends Controller
                 return back()->with('error', 'Data nontender tidak valid atau kosong.');
             }
 
+            // Ambil kd_rup dari PaketModel untuk tahun ini
+            $paketRups = PaketModel::where('tahun_anggaran', $tahun)
+                ->pluck('kd_rup')
+                ->filter()
+                ->unique()
+                ->toArray();
+
             $incomingByRup = [];
             foreach ($data as $item) {
-                if (empty($item['kd_rup'])) {
+                if (empty($item['kd_rup']) || !in_array($item['kd_rup'], $paketRups)) {
                     continue;
                 }
 
@@ -450,7 +463,7 @@ class SyncController extends Controller
             }
 
             if (empty($incomingByRup)) {
-                Log::warning('Tidak ada item nontender valid (kd_rup + salah satu dari kd_nontender/status_nontender/hps) pada respon API.');
+                Log::warning('Tidak ada item nontender valid (kd_rup + salah satu dari kd_nontender/status_nontender/hps) pada respon API yang cocok dengan PaketModel.');
                 SyncdataModel::whereKey($id)->update(['last_synced_at' => $now]);
 
                 return back()->with([
@@ -531,6 +544,13 @@ class SyncController extends Controller
                 return redirect()->back()->with('error', 'Data paket tender tidak valid atau kosong.');
             }
 
+            // Ambil kd_rup yang ada di PaketModel untuk tahun ini
+            $paketRups = PaketModel::where('tahun_anggaran', $tahun)
+                ->pluck('kd_rup')
+                ->filter()
+                ->unique()
+                ->toArray();
+
             foreach ($data as $item) {
                 if (strcasecmp((string)($item['status_tender'] ?? ''), 'Selesai') !== 0) {
                     continue;
@@ -539,7 +559,7 @@ class SyncController extends Controller
                 $kdRup    = $item['kd_rup'] ?? null;
                 $kdTender = $item['kd_tender'] ?? null;
 
-                if (!$kdRup || !$kdTender) {
+                if (!$kdRup || !$kdTender || !in_array($kdRup, $paketRups)) {
                     continue;
                 }
 
@@ -565,10 +585,15 @@ class SyncController extends Controller
                 if (empty($item1['kd_tender'])) {
                     continue;
                 }
+                // Cari kd_rup dari PaketModel berdasarkan kd_tender
+                $kdRup = PaketModel::where('kd_tender', $item1['kd_tender'])->value('kd_rup');
+                if (!$kdRup || !in_array($kdRup, $paketRups)) {
+                    continue;
+                }
                 $raw = $item1['tgl_kontrak'] ?? null;
                 $tgl = $raw ? Carbon::parse($raw)->tz('Asia/Jayapura')->toDateString() : null;
 
-                KontrakModel::where('kd_tender', $item1['kd_tender'])
+                KontrakModel::where('kd_rup', $kdRup)
                     ->update([
                         'no_kontrak'   => $item1['no_kontrak'] ?? null,
                         'tgl_kontrak'  => $tgl,
@@ -591,7 +616,11 @@ class SyncController extends Controller
                 if (empty($item2['kd_tender'])) {
                     continue;
                 }
-                KontrakModel::where('kd_tender', $item2['kd_tender'])
+                $kdRup = PaketModel::where('kd_tender', $item2['kd_tender'])->value('kd_rup');
+                if (!$kdRup || !in_array($kdRup, $paketRups)) {
+                    continue;
+                }
+                KontrakModel::where('kd_rup', $kdRup)
                     ->update([
                         'waktu_pelaksanaan' => $item2['waktu_penyelesaian'] ?? null
                     ]);
@@ -612,7 +641,11 @@ class SyncController extends Controller
                 if (empty($item3['kd_tender'])) {
                     continue;
                 }
-                KontrakModel::where('kd_tender', $item3['kd_tender'])
+                $kdRup = PaketModel::where('kd_tender', $item3['kd_tender'])->value('kd_rup');
+                if (!$kdRup || !in_array($kdRup, $paketRups)) {
+                    continue;
+                }
+                KontrakModel::where('kd_rup', $kdRup)
                     ->update([
                         'nilai_penawaran' => $item3['nilai_penawaran'] ?? null,
                         'nilai_kontrak'    => $item3['nilai_kontrak'] ?? null,
@@ -655,8 +688,15 @@ class SyncController extends Controller
                 return redirect()->back()->with('error', 'Data paket nontender tidak valid atau kosong.');
             }
 
+            // Ambil kd_rup yang ada di PaketModel untuk tahun ini
+            $paketRups = PaketModel::where('tahun_anggaran', $tahun)
+                ->pluck('kd_rup')
+                ->filter()
+                ->unique()
+                ->toArray();
+
             foreach ($data as $item) {
-                if (empty($item['kd_rup']) || empty($item['kd_nontender'])) {
+                if (empty($item['kd_rup']) || empty($item['kd_nontender']) || !in_array($item['kd_rup'], $paketRups)) {
                     continue;
                 }
                 KontrakModel::updateOrCreate(
@@ -682,10 +722,15 @@ class SyncController extends Controller
                 if (empty($item1['kd_nontender'])) {
                     continue;
                 }
+                // Cari kd_rup dari PaketModel berdasarkan kd_nontender
+                $kdRup = PaketModel::where('kd_nontender', $item1['kd_nontender'])->value('kd_rup');
+                if (!$kdRup || !in_array($kdRup, $paketRups)) {
+                    continue;
+                }
                 $raw = $item1['tgl_kontrak'] ?? null;
                 $tgl = $raw ? Carbon::parse($raw)->tz('Asia/Jayapura')->toDateString() : null;
 
-                KontrakModel::where('kd_nontender', $item1['kd_nontender'])
+                KontrakModel::where('kd_rup', $kdRup)
                     ->update([
                         'tahun_anggaran'   => $item1['tahun_anggaran'] ?? $tahun,
                         'no_kontrak'       => $item1['no_kontrak'] ?? null,
@@ -709,7 +754,11 @@ class SyncController extends Controller
                 if (empty($item2['kd_nontender'])) {
                     continue;
                 }
-                KontrakModel::where('kd_nontender', $item2['kd_nontender'])
+                $kdRup = PaketModel::where('kd_nontender', $item2['kd_nontender'])->value('kd_rup');
+                if (!$kdRup || !in_array($kdRup, $paketRups)) {
+                    continue;
+                }
+                KontrakModel::where('kd_rup', $kdRup)
                     ->update([
                         'waktu_pelaksanaan' => $item2['waktu_penyelesaian'] ?? null
                     ]);
@@ -730,7 +779,11 @@ class SyncController extends Controller
                 if (empty($item3['kd_nontender'])) {
                     continue;
                 }
-                KontrakModel::where('kd_nontender', $item3['kd_nontender'])
+                $kdRup = PaketModel::where('kd_nontender', $item3['kd_nontender'])->value('kd_rup');
+                if (!$kdRup || !in_array($kdRup, $paketRups)) {
+                    continue;
+                }
+                KontrakModel::where('kd_rup', $kdRup)
                     ->update([
                         'nilai_penawaran' => $item3['nilai_penawaran'] ?? null,
                         'nilai_kontrak'    => $item3['nilai_kontrak'] ?? null,
@@ -863,13 +916,13 @@ class SyncController extends Controller
     public function syncpenyediasikap(Request $request)
     {
         $npwp = $request->npwp_penyedia;
-        
+
         try {
             $response = Http::timeout(60)
                 ->retry(3, 200)
                 ->acceptJson()
                 ->get(config('services.lkpp.isb_sikap_penyedia') . $npwp);
-            
+
             $data = $response->json();
 
             if ($response->successful() && !empty($data)) {

@@ -81,12 +81,12 @@
                     <div
                         class="absolute left-0 mt-3 w-52 bg-white/95 backdrop-blur-xl border border-yellow-200/60 rounded-2xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transform translate-y-2 group-hover:translate-y-0 group-focus-within:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
                         <div class="py-2">
-                            <a href="{{ route('bidang') }}"
+                           {{--  <a href="{{ route('bidang') }}"
                                 class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('bidang') ? 'bg-yellow-100 text-yellow-800' : '' }}">
                                 <i
                                     class="fas fa-layer-group w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
                                 <span class="font-medium">Data Bidang</span>
-                            </a>
+                            </a> --}}
                             <a href="{{ route('datapaket') }}"
                                 class="flex items-center px-5 py-3 text-gray-700 hover:text-gray-900 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-yellow-100/50 transition-all duration-200 group/item {{ request()->routeIs('datapaket') ? 'bg-yellow-100 text-yellow-800' : '' }}">
                                 <i class="fas fa-box w-4 h-4 mr-3 text-gray-500 group-hover/item:text-yellow-600"></i>
